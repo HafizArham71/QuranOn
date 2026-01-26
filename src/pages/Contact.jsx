@@ -141,9 +141,9 @@ const Contact = () => {
           response = { ok: true, json: () => Promise.resolve(data) };
         }
       } else {
-        // Production - try debug endpoint first to check environment
+        // Production - try Firebase Functions
         try {
-          apiUrl = '/api/debug';
+          apiUrl = `${getApiUrl()}/contact`;
           response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -152,27 +152,9 @@ const Contact = () => {
             body: JSON.stringify(formData),
           });
           
-          const debugData = await response.json();
-          console.log('Debug response:', debugData);
-          
-          // If debug shows env vars are set, try real contact
-          if (debugData.environment.EMAIL_USER && debugData.environment.EMAIL_APP_PASSWORD !== 'MISSING') {
-            console.log('Environment variables found, trying real contact function');
-            apiUrl = '/api/contact-simple';
-            response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(formData),
-            });
-          } else {
-            console.log('Environment variables missing, using demo mode');
-            const data = await mockApiCall('/api/contact', formData);
-            response = { ok: true, json: () => Promise.resolve(data) };
-          }
+          if (!response.ok) throw new Error('Firebase function error');
         } catch (netlifyError) {
-          console.log('Netlify functions failed, using demo mode');
+          console.log('Firebase functions failed, using demo mode');
           // Use demo mode
           const data = await mockApiCall('/api/contact', formData);
           response = { ok: true, json: () => Promise.resolve(data) };

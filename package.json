@@ -9,7 +9,12 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run dev:server\"",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "firebase:init": "firebase init hosting",
+    "firebase:serve": "firebase serve --only hosting",
+    "firebase:deploy": "firebase deploy",
+    "firebase:deploy:functions": "firebase deploy --only functions",
+    "firebase:deploy:hosting": "firebase deploy --only hosting"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.0",

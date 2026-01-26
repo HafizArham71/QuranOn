@@ -188,9 +188,9 @@ const BookTrial = () => {
           response = { ok: true, json: () => Promise.resolve(data) };
         }
       } else {
-        // Production - try Netlify functions
+        // Production - try Firebase Functions
         try {
-          apiUrl = '/api/book-trial';
+          apiUrl = `${getApiUrl()}/bookTrial`;
           response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -199,9 +199,9 @@ const BookTrial = () => {
             body: JSON.stringify(formData),
           });
           
-          if (!response.ok) throw new Error('Netlify function error');
+          if (!response.ok) throw new Error('Firebase function error');
         } catch (netlifyError) {
-          console.log('Netlify functions failed, using demo mode');
+          console.log('Firebase functions failed, using demo mode');
           // Use demo mode
           const data = await mockApiCall('/api/book-trial', formData);
           response = { ok: true, json: () => Promise.resolve(data) };

@@ -10,8 +10,8 @@ export const getApiUrl = () => {
     return 'http://localhost:3001';
   }
   
-  // Production environment - use relative path for Netlify functions
-  return '/api';
+  // Production environment - use Firebase Functions
+  return 'https://us-central1-quranon-website.cloudfunctions.net';
 };
 
 export const isDevelopment = () => import.meta.env.DEV;
