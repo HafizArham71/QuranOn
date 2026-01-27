@@ -1,9 +1,0 @@
-{
-  "name": "quranon-functions",
-  "version": "1.0.0",
-  "description": "Netlify Functions for QuranOn",
-  "main": "api/contact.js",
-  "dependencies": {
-    "nodemailer": "^6.10.1"
-  }
-}

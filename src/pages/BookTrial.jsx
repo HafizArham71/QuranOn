@@ -164,91 +164,65 @@ const BookTrial = () => {
     setIsSubmitting(true);
 
     try {
-      let response;
-      let apiUrl;
-
-      // Determine API URL based on environment
-      if (isDevelopment()) {
-        // Try local server first
-        try {
-          apiUrl = 'http://localhost:3001/api/book-trial';
-          response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          
-          if (!response.ok) throw new Error('Local server error');
-        } catch (localError) {
-          console.log('Local server failed, using demo mode');
-          // Use demo mode
-          const data = await mockApiCall('/api/book-trial', formData);
-          response = { ok: true, json: () => Promise.resolve(data) };
-        }
-      } else {
-        // Production - try Firebase Functions
-        try {
-          apiUrl = `${getApiUrl()}/bookTrial`;
-          response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          
-          if (!response.ok) throw new Error('Firebase function error');
-        } catch (netlifyError) {
-          console.log('Firebase functions failed, using demo mode');
-          // Use demo mode
-          const data = await mockApiCall('/api/book-trial', formData);
-          response = { ok: true, json: () => Promise.resolve(data) };
-        }
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        const successMessage = data.demo 
-          ? "Trial Booking Received! (Demo Mode)"
-          : "Trial Class Booked Successfully!";
-        
-        toast.success(successMessage, {
-          description: data.demo 
-            ? "This is a demo response. Forms are working correctly!"
-            : "Thank you! We'll contact you within 24 hours to schedule your free trial class.",
-        });
-        
-        // Reset form
-        setFormData({
-          parentName: '',
-          email: '',
-          phone: '',
-          country: '',
-          studentName: '',
-          studentAge: '',
-          course: '',
-          preferredTime: '',
-          additionalInfo: '',
-        });
-        setErrors({});
-        setTouched({});
-      } else {
-        toast.error("Booking Failed", {
-          description: data.message || "Please try again later.",
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      
-      // Last resort - always show success with demo mode
+      // Try to send real email via backend server first
       try {
-        const data = await mockApiCall('/api/book-trial', formData);
-        toast.success("Trial Booking Received! (Demo Mode)", {
-          description: "Forms are working! This is a demo response.",
+        const response = await fetch('http://localhost:3001/api/book-trial', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
         });
+        
+        if (response.ok) {
+          const data = await response.json();
+          toast.success("Trial Class Booked Successfully!", {
+            description: "Thank you for booking a trial class. We'll contact you within 24 hours to schedule your session.",
+          });
+          
+          // Reset form
+          setFormData({
+            parentName: '',
+            email: '',
+            phone: '',
+            country: '',
+            studentName: '',
+            studentAge: '',
+            course: '',
+            preferredTime: '',
+            additionalInfo: '',
+          });
+          setErrors({});
+          setTouched({});
+          return;
+        }
+      } catch (localError) {
+        console.log('Local server not available, trying alternative...');
+      }
+
+      // Use Formsubmit.co for production (free and immediate)
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append('name', formData.parentName);
+      formDataToSubmit.append('email', formData.email);
+      formDataToSubmit.append('phone', formData.phone);
+      formDataToSubmit.append('country', formData.country);
+      formDataToSubmit.append('studentName', formData.studentName);
+      formDataToSubmit.append('studentAge', formData.studentAge);
+      formDataToSubmit.append('course', formData.course);
+      formDataToSubmit.append('preferredTime', formData.preferredTime);
+      formDataToSubmit.append('additionalInfo', formData.additionalInfo);
+      formDataToSubmit.append('subject', `Trial Booking Request - ${formData.studentName}`);
+
+      const formResponse = await fetch('https://formsubmit.co/harham0210@gmail.com', {
+        method: 'POST',
+        body: formDataToSubmit,
+      });
+
+      if (formResponse.ok) {
+        toast.success("Trial Class Booked Successfully!", {
+          description: "Thank you for booking a trial class. We'll contact you within 24 hours to schedule your session.",
+        });
+        
         // Reset form
         setFormData({
           parentName: '',
@@ -263,11 +237,34 @@ const BookTrial = () => {
         });
         setErrors({});
         setTouched({});
-      } catch (fallbackError) {
-        toast.error("Error", {
-          description: "Please refresh and try again.",
-        });
+      } else {
+        throw new Error('Form service error');
       }
+      
+    } catch (error) {
+      console.log('All services failed, using demo mode');
+      // Fallback to demo mode
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success("Trial Booking Received! (Demo Mode)", {
+        description: "This is a demo response. For real bookings, please contact us directly at harham0210@gmail.com",
+      });
+      
+      // Reset form
+      setFormData({
+        parentName: '',
+        email: '',
+        phone: '',
+        country: '',
+        studentName: '',
+        studentAge: '',
+        course: '',
+        preferredTime: '',
+        additionalInfo: '',
+      });
+      setErrors({});
+      setTouched({});
+      
     } finally {
       setIsSubmitting(false);
     }

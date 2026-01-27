@@ -16,7 +16,7 @@ const createTransporter = () => {
   if (!emailUser) {
     console.log('Using hardcoded email credentials');
     emailUser = 'harham0210@gmail.com';
-    appPassword = 'your-16-character-app-password'; // Replace with actual password
+    appPassword = 'akmu eyda pbdc qdcp'; // Your actual app password
     emailTo = 'harham0210@gmail.com';
   }
 

@@ -15,7 +15,7 @@ export default defineConfig({
     // Set API URL based on environment
     __API_URL__: JSON.stringify(
       process.env.NODE_ENV === 'production' 
-        ? '/api'  // Netlify functions
+        ? 'https://us-central1-quranon-website.cloudfunctions.net'  // Firebase Functions
         : 'http://localhost:3001'  // Local development
     )
   },

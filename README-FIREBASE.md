@@ -138,13 +138,10 @@ After deployment, monitor:
 - **Usage**: Monitor function invocations
 - **Error Reporting**: Track any issues
 
-## 🔄 Migration from Netlify
+## � Additional Resources
 
-1. ✅ Removed Netlify configuration
-2. ✅ Added Firebase hosting config
-3. ✅ Created Firebase Cloud Functions
-4. ✅ Updated API endpoints
-5. ✅ Configured environment variables
-6. ✅ Added deployment scripts
+- [Firebase Hosting Documentation](https://firebase.google.com/docs/hosting)
+- [Firebase Cloud Functions Documentation](https://firebase.google.com/docs/functions)
+- [Firebase CLI Reference](https://firebase.google.com/docs/cli)
 
 Your website is now fully migrated to Firebase! 🎉

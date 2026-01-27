@@ -18,11 +18,6 @@ export const mockApiCall = async (endpoint, data) => {
 
 export const isLocalServerAvailable = async () => {
   try {
-    // In production, test Netlify functions health
-    if (!import.meta.env.DEV) {
-      const response = await fetch('/api/health');
-      return response.ok;
-    }
     // In development, test local server
     const response = await fetch('http://localhost:3001/api/health');
     return response.ok;

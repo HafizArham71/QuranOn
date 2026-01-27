@@ -117,87 +117,56 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      let response;
-      let apiUrl;
-
-      // Determine API URL based on environment
-      if (isDevelopment()) {
-        // Try local server first
-        try {
-          apiUrl = 'http://localhost:3001/api/contact';
-          response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          
-          if (!response.ok) throw new Error('Local server error');
-        } catch (localError) {
-          console.log('Local server failed, using demo mode');
-          // Use demo mode
-          const data = await mockApiCall('/api/contact', formData);
-          response = { ok: true, json: () => Promise.resolve(data) };
-        }
-      } else {
-        // Production - try Firebase Functions
-        try {
-          apiUrl = `${getApiUrl()}/contact`;
-          response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-          
-          if (!response.ok) throw new Error('Firebase function error');
-        } catch (netlifyError) {
-          console.log('Firebase functions failed, using demo mode');
-          // Use demo mode
-          const data = await mockApiCall('/api/contact', formData);
-          response = { ok: true, json: () => Promise.resolve(data) };
-        }
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        const successMessage = data.demo 
-          ? "Message Received! (Demo Mode)"
-          : "Message Sent Successfully!";
-        
-        toast.success(successMessage, {
-          description: data.demo 
-            ? "This is a demo response. Forms are working correctly!"
-            : "Thank you for contacting us. We'll get back to you within 24 hours.",
-        });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: '',
-        });
-        setErrors({});
-        setTouched({});
-      } else {
-        toast.error("Failed to Send", {
-          description: data.message || "Please try again later.",
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      
-      // Last resort - always show success with demo mode
+      // Try to send real email via backend server first
       try {
-        const data = await mockApiCall('/api/contact', formData);
-        toast.success("Message Received! (Demo Mode)", {
-          description: "Forms are working! This is a demo response.",
+        const response = await fetch('http://localhost:3001/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
         });
+        
+        if (response.ok) {
+          const data = await response.json();
+          toast.success("Message Sent Successfully!", {
+            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+          });
+          
+          // Reset form
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            subject: '',
+            message: '',
+          });
+          setErrors({});
+          setTouched({});
+          return;
+        }
+      } catch (localError) {
+        console.log('Local server not available, trying alternative...');
+      }
+
+      // Use Formsubmit.co for production (free and immediate)
+      const formDataToSubmit = new FormData();
+      formDataToSubmit.append('name', formData.name);
+      formDataToSubmit.append('email', formData.email);
+      formDataToSubmit.append('phone', formData.phone);
+      formDataToSubmit.append('subject', formData.subject);
+      formDataToSubmit.append('message', formData.message);
+
+      const formResponse = await fetch('https://formsubmit.co/harham0210@gmail.com', {
+        method: 'POST',
+        body: formDataToSubmit,
+      });
+
+      if (formResponse.ok) {
+        toast.success("Message Sent Successfully!", {
+          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
+        });
+        
         // Reset form
         setFormData({
           name: '',
@@ -208,11 +177,30 @@ const Contact = () => {
         });
         setErrors({});
         setTouched({});
-      } catch (fallbackError) {
-        toast.error("Error", {
-          description: "Please refresh and try again.",
-        });
+      } else {
+        throw new Error('Form service error');
       }
+      
+    } catch (error) {
+      console.log('All services failed, using demo mode');
+      // Fallback to demo mode
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast.success("Message Received! (Demo Mode)", {
+        description: "This is a demo response. For real emails, please contact us directly at harham0210@gmail.com",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      });
+      setErrors({});
+      setTouched({});
+      
     } finally {
       setIsSubmitting(false);
     }
