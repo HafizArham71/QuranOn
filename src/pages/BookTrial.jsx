@@ -213,7 +213,7 @@ const BookTrial = () => {
       formDataToSubmit.append('additionalInfo', formData.additionalInfo);
       formDataToSubmit.append('subject', `Trial Booking Request - ${formData.studentName}`);
 
-      const formResponse = await fetch('https://formsubmit.co/harham0210@gmail.com', {
+      const formResponse = await fetch('https://formsubmit.co/quranon2@gmail.com', {
         method: 'POST',
         body: formDataToSubmit,
       });
@@ -247,7 +247,7 @@ const BookTrial = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast.success("Trial Booking Received! (Demo Mode)", {
-        description: "This is a demo response. For real bookings, please contact us directly at harham0210@gmail.com",
+        description: "This is a demo response. For real bookings, please contact us directly at quranon2@gmail.com",
       });
       
       // Reset form

@@ -149,20 +149,28 @@ const Contact = () => {
         console.log('Local server not available, trying alternative...');
       }
 
-      // Use Formsubmit.co for production (free and immediate)
-      const formDataToSubmit = new FormData();
-      formDataToSubmit.append('name', formData.name);
-      formDataToSubmit.append('email', formData.email);
-      formDataToSubmit.append('phone', formData.phone);
-      formDataToSubmit.append('subject', formData.subject);
-      formDataToSubmit.append('message', formData.message);
-
-      const formResponse = await fetch('https://formsubmit.co/harham0210@gmail.com', {
+      // Use Formspree for production (most reliable free service)
+      const formResponse = await fetch('https://formspree.io/f/xblrlwvv', {
         method: 'POST',
-        body: formDataToSubmit,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          _subject: `New Contact Form Submission: ${formData.subject}`,
+        }),
       });
 
+      console.log('Formspree response:', formResponse.status, formResponse.statusText);
+
       if (formResponse.ok) {
+        const responseData = await formResponse.json();
+        console.log('Formspree success:', responseData);
         toast.success("Message Sent Successfully!", {
           description: "Thank you for contacting us. We'll get back to you within 24 hours.",
         });
@@ -178,7 +186,9 @@ const Contact = () => {
         setErrors({});
         setTouched({});
       } else {
-        throw new Error('Form service error');
+        const errorData = await formResponse.text();
+        console.error('Formspree error:', errorData);
+        throw new Error(`Form service error: ${formResponse.status}`);
       }
       
     } catch (error) {
@@ -187,7 +197,7 @@ const Contact = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast.success("Message Received! (Demo Mode)", {
-        description: "This is a demo response. For real emails, please contact us directly at harham0210@gmail.com",
+        description: "This is a demo response. For real emails, please contact us directly at quranon2@gmail.com",
       });
       
       // Reset form
