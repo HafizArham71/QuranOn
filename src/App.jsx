@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import QuranOnChatbot from "./components/QuranOnChatbot";
 import { Toaster } from "./components/ui/sonner";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -36,6 +37,8 @@ function App() {
         <Footer />
         {/* WhatsApp Button - Update phoneNumber with your WhatsApp number (include country code, e.g., "15551234567" or "+15551234567") */}
         <WhatsAppButton phoneNumber="923134350157" />
+        {/* AI Chatbot Assistant */}
+        <QuranOnChatbot />
         <Toaster />
       </BrowserRouter>
     </div>

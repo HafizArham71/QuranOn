@@ -8,7 +8,6 @@ import { toast } from '../components/ui/sonner';
 import { Card, CardContent } from '../components/ui/card';
 import { getFieldError, validateEmail, validatePhone, validateName, validateMessage } from '../utils/validation';
 import { getApiUrl, isDevelopment } from '../utils/apiConfig';
-import { mockApiCall, isLocalServerAvailable } from '../utils/apiFallback';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -157,38 +156,30 @@ const Contact = () => {
         console.log('❌ Local server failed:', localError.message);
       }
 
-      // Use EmailJS for email delivery (no API key issues)
-      console.log('🌐 Connecting to EmailJS...');
+      // Use Formspree for email delivery (100% free, Gmail compatible)
+      console.log('🌐 Connecting to Formspree...');
       
-      const emailData = {
-        service_id: 'service_quranon',
-        template_id: 'template_contact',
-        user_id: 'CBrQY0IEsb8fp7Itj5unro3hHi0cQndN',
-        template_params: {
-          to_email: 'quranon2@gmail.com',
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          subject: formData.subject,
-          message: formData.message,
-          reply_to: formData.email
-        }
-      };
+      const formspreeData = new FormData();
+      formspreeData.append('name', formData.name);
+      formspreeData.append('email', formData.email);
+      formspreeData.append('phone', formData.phone);
+      formspreeData.append('subject', formData.subject);
+      formspreeData.append('message', formData.message);
 
-      console.log('📤 Sending to EmailJS:', emailData);
+      console.log('📤 Sending to Formspree:', Object.fromEntries(formspreeData));
       
-      const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+      const formspreeResponse = await fetch('https://formspree.io/f/xeekgpqv', {
         method: 'POST',
+        body: formspreeData,
         headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(emailData),
+          'Accept': 'application/json'
+        }
       });
 
-      console.log('📥 EmailJS response:', emailJSResponse.status, emailJSResponse.statusText);
+      console.log('📥 Formspree response:', formspreeResponse.status, formspreeResponse.statusText);
 
-      if (emailJSResponse.ok || emailJSResponse.status === 200) {
-        console.log('✅ EmailJS delivery successful!');
+      if (formspreeResponse.ok || formspreeResponse.status === 200) {
+        console.log('✅ Formspree delivery successful!');
         
         // Reset form first
         setFormData({
@@ -208,7 +199,7 @@ const Contact = () => {
         // Show toast after modal
         setTimeout(() => {
           toast.success("Message Sent Successfully!", {
-            description: "Your message has been delivered to quranon2@gmail.com via EmailJS.",
+            description: "Your message has been delivered to quranon2@gmail.com via Formspree.",
             duration: 5000,
           });
         }, 1000);
@@ -218,8 +209,8 @@ const Contact = () => {
           setShowSuccessModal(false);
         }, 3000);
       } else {
-        const errorText = await emailJSResponse.text();
-        console.error('❌ EmailJS error:', emailJSResponse.status, errorText);
+        const errorText = await formspreeResponse.text();
+        console.error('❌ Formspree error:', formspreeResponse.status, errorText);
         
         // Fallback to simulation
         console.log('🔄 Using Gmail simulation as fallback...');

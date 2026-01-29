@@ -62,6 +62,68 @@ const About = () => {
         </div>
       </section>
 
+      {/* Founder Section */}
+      <section className="py-16 bg-gradient-to-br from-teal-50 to-cyan-50">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Meet Our Founder</h2>
+            <p className="mt-4 text-lg text-gray-600">
+              The visionary behind Quran Academy's mission
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <div className="md:flex">
+              <div className="md:w-1/3 bg-gradient-to-br from-teal-600 to-cyan-600 p-8 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="w-32 h-32 bg-white rounded-full mx-auto mb-4 overflow-hidden">
+                    <img 
+                      src="/images/founder-photo.jpg" 
+                      alt="Hafiz Arham - Founder of Quran Academy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-2">Hafiz Arham</h3>
+                  <p className="text-teal-100">Founder & CEO</p>
+                  <p className="text-teal-100">Quran Academy</p>
+                </div>
+              </div>
+              
+              <div className="md:w-2/3 p-8">
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">Who I Am</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      I am Hafiz Arham, a passionate educator and multidimensional professional dedicated to bridging traditional Islamic knowledge with modern technology. As a Hafiz-ul-Quran with advanced expertise in software development, UI/UX design, and AI, I bring a unique blend of spiritual wisdom and technical innovation to Quran education.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">What I Do</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      As the founder of Quran Academy, I combine my deep understanding of Quranic teachings with cutting-edge technology to create exceptional learning experiences. I personally oversee curriculum development, teacher training, and technological innovation, ensuring every aspect of our platform meets the highest standards of both educational excellence and technical sophistication.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3">My Aim for Quran Academy</h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      My vision is to revolutionize Quran education by making it accessible, engaging, and effective for Muslims worldwide. I aim to build Quran Academy into the most trusted online learning platform, where technology and tradition unite to nurture a generation that not only recites the Quran beautifully but lives by its timeless wisdom and guidance.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-teal-50 border-l-4 border-teal-600 p-4 rounded">
+                    <p className="text-teal-800 italic">
+                      "My goal is to create a world where every Muslim can connect deeply with the Quran through innovative, technology-enhanced learning that preserves authenticity while embracing modern educational excellence."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Mission & Vision */}
       <section className="py-16 bg-gray-50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -11,7 +11,7 @@ const WhatsAppButton = ({ phoneNumber = "1234567890" }) => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-24 right-6 z-50">
       {/* Pulse animation ring */}
       <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></div>
       

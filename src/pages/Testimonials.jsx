@@ -35,8 +35,8 @@ const Testimonials = () => {
           <Carousel className="w-full">
             <CarouselContent>
               {testimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
-                  <Card className="border-none shadow-lg h-full">
+                <CarouselItem key={testimonial.id} className="basis-full md:basis-1/2 lg:basis-1/3">
+                  <Card className="border-none shadow-lg h-full mx-2">
                     <CardContent className="p-6 flex flex-col h-full">
                       <div className="mb-4">
                         <Quote className="h-8 w-8 text-teal-600 opacity-50" />
@@ -57,8 +57,8 @@ const Testimonials = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="-left-12" />
-            <CarouselNext className="-right-12" />
+            <CarouselPrevious className="hidden md:flex -left-12" />
+            <CarouselNext className="hidden md:flex -right-12" />
           </Carousel>
         </div>
       </section>
@@ -103,7 +103,7 @@ const Testimonials = () => {
               Qualified, experienced, and dedicated to your success
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {teachers.map((teacher) => (
               <Card key={teacher.id} className="border-none shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <CardContent className="p-6 text-center">
@@ -111,10 +111,10 @@ const Testimonials = () => {
                     <img 
                       src={teacher.image} 
                       alt={teacher.name}
-                      className="w-24 h-24 rounded-full mx-auto object-cover border-4 border-teal-100"
+                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full mx-auto object-cover border-4 border-teal-100"
                     />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-1">{teacher.name}</h3>
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-1">{teacher.name}</h3>
                   <p className="text-sm text-teal-600 font-medium mb-2">{teacher.qualification}</p>
                   <p className="text-xs text-gray-600 mb-3">{teacher.experience} experience</p>
                   <div className="text-xs text-gray-700 mb-3">
@@ -142,22 +142,22 @@ const Testimonials = () => {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900">Trusted Worldwide</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             <div className="text-center">
-              <p className="text-4xl font-bold text-teal-600 mb-2">5,000+</p>
-              <p className="text-gray-700">Happy Students</p>
+              <p className="text-3xl sm:text-4xl font-bold text-teal-600 mb-2">5,000+</p>
+              <p className="text-sm sm:text-base text-gray-700">Happy Students</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-teal-600 mb-2">50+</p>
-              <p className="text-gray-700">Countries</p>
+              <p className="text-3xl sm:text-4xl font-bold text-teal-600 mb-2">50+</p>
+              <p className="text-sm sm:text-base text-gray-700">Countries</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-teal-600 mb-2">100+</p>
-              <p className="text-gray-700">Expert Teachers</p>
+              <p className="text-3xl sm:text-4xl font-bold text-teal-600 mb-2">100+</p>
+              <p className="text-sm sm:text-base text-gray-700">Expert Teachers</p>
             </div>
             <div className="text-center">
-              <p className="text-4xl font-bold text-teal-600 mb-2">4.9/5</p>
-              <p className="text-gray-700">Average Rating</p>
+              <p className="text-3xl sm:text-4xl font-bold text-teal-600 mb-2">4.9/5</p>
+              <p className="text-sm sm:text-base text-gray-700">Average Rating</p>
             </div>
           </div>
         </div>
