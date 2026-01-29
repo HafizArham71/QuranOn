@@ -16,7 +16,7 @@ const Footer = () => {
                 <BookOpen className="h-6 w-6 text-white" />
               </div>
               <div className="flex flex-col">
-                <span className="text-lg font-bold text-gray-900">Quran Online</span>
+                <span className="text-lg font-bold text-gray-900">QuranOn</span>
                 <span className="text-xs text-teal-600">Learn with Confidence</span>
               </div>
             </Link>
@@ -69,11 +69,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-2 text-sm text-gray-600">
                 <Mail className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />
-                <span>info@quranacademy.com</span>
+                <span>quranon2@gmail.com</span>
               </li>
               <li className="flex items-start space-x-2 text-sm text-gray-600">
                 <Phone className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />
-                <span>+1 (555) 123-4567</span>
+                <span>+92 313 435 157</span>
               </li>
               <li className="flex items-start space-x-2 text-sm text-gray-600">
                 <MapPin className="h-5 w-5 text-teal-600 mt-0.5 flex-shrink-0" />

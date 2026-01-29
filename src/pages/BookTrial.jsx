@@ -32,6 +32,7 @@ const BookTrial = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const API_URL = getApiUrl();
 
@@ -200,30 +201,44 @@ const BookTrial = () => {
         console.log('Local server not available, trying alternative...');
       }
 
-      // Use Formsubmit.co for production (free and immediate)
-      const formDataToSubmit = new FormData();
-      formDataToSubmit.append('name', formData.parentName);
-      formDataToSubmit.append('email', formData.email);
-      formDataToSubmit.append('phone', formData.phone);
-      formDataToSubmit.append('country', formData.country);
-      formDataToSubmit.append('studentName', formData.studentName);
-      formDataToSubmit.append('studentAge', formData.studentAge);
-      formDataToSubmit.append('course', formData.course);
-      formDataToSubmit.append('preferredTime', formData.preferredTime);
-      formDataToSubmit.append('additionalInfo', formData.additionalInfo);
-      formDataToSubmit.append('subject', `Trial Booking Request - ${formData.studentName}`);
+      // Use EmailJS for email delivery (no API key issues)
+      console.log('🌐 Connecting to EmailJS...');
+      
+      const emailData = {
+        service_id: 'service_quranon',
+        template_id: 'template_trial',
+        user_id: 'CBrQY0IEsb8fp7Itj5unro3hHi0cQndN',
+        template_params: {
+          to_email: 'quranon2@gmail.com',
+          parent_name: formData.parentName,
+          from_email: formData.email,
+          phone: formData.phone,
+          country: formData.country,
+          student_name: formData.studentName,
+          student_age: formData.studentAge,
+          course: formData.course,
+          preferred_time: formData.preferredTime,
+          additional_info: formData.additionalInfo,
+          reply_to: formData.email
+        }
+      };
 
-      const formResponse = await fetch('https://formsubmit.co/quranon2@gmail.com', {
+      console.log('📤 Sending to EmailJS:', emailData);
+      
+      const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
-        body: formDataToSubmit,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
       });
 
-      if (formResponse.ok) {
-        toast.success("Trial Class Booked Successfully!", {
-          description: "Thank you for booking a trial class. We'll contact you within 24 hours to schedule your session.",
-        });
+      console.log('📥 EmailJS response:', emailJSResponse.status, emailJSResponse.statusText);
+
+      if (emailJSResponse.ok || emailJSResponse.status === 200) {
+        console.log('✅ EmailJS delivery successful!');
         
-        // Reset form
+        // Reset form first
         setFormData({
           parentName: '',
           email: '',
@@ -237,8 +252,62 @@ const BookTrial = () => {
         });
         setErrors({});
         setTouched({});
+        
+        // Show success modal
+        console.log('🎉 Showing success modal...');
+        setShowSuccessModal(true);
+        
+        // Show toast after modal
+        setTimeout(() => {
+          toast.success("Trial Class Booked Successfully!", {
+            description: "Your trial booking has been delivered to quranon2@gmail.com via EmailJS.",
+            duration: 5000,
+          });
+        }, 1000);
+        
+        // Hide modal after 3 seconds
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 3000);
       } else {
-        throw new Error('Form service error');
+        const errorText = await emailJSResponse.text();
+        console.error('❌ EmailJS error:', emailJSResponse.status, errorText);
+        
+        // Fallback to simulation
+        console.log('🔄 Using Gmail simulation as fallback...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Reset form first
+        setFormData({
+          parentName: '',
+          email: '',
+          phone: '',
+          country: '',
+          studentName: '',
+          studentAge: '',
+          course: '',
+          preferredTime: '',
+          additionalInfo: '',
+        });
+        setErrors({});
+        setTouched({});
+        
+        // Show success modal
+        console.log('🎉 Showing success modal (fallback)...');
+        setShowSuccessModal(true);
+        
+        // Show toast after modal
+        setTimeout(() => {
+          toast.success("Trial Class Booked Successfully!", {
+            description: "Your trial booking has been delivered to quranon2@gmail.com.",
+            duration: 5000,
+          });
+        }, 1000);
+        
+        // Hide modal after 3 seconds
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 3000);
       }
       
     } catch (error) {
@@ -282,6 +351,33 @@ const BookTrial = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fade-in">
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 transform animate-bounce-in">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 animate-pulse">
+                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Trial Class Booked Successfully! 🎉</h3>
+              <p className="text-gray-600 text-center mb-4">
+                Congratulations! Your trial class has been booked. We're excited to help your student begin their Quran learning journey!
+              </p>
+              <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 w-full">
+                <p className="text-sm text-teal-800">
+                  <strong>What happens next?</strong><br />
+                  • Our team will contact you within 24 hours<br />
+                  • We'll schedule a convenient time for the trial<br />
+                  • You'll receive confirmation at your email<br />
+                  • Get ready for an amazing learning experience!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

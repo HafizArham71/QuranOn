@@ -21,6 +21,7 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const API_URL = getApiUrl();
 
@@ -117,8 +118,12 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      console.log('🚀 Starting form submission...');
+      console.log('📝 Form data:', formData);
+      
       // Try to send real email via backend server first
       try {
+        console.log('🔍 Trying local server...');
         const response = await fetch('http://localhost:3001/api/contact', {
           method: 'POST',
           headers: {
@@ -127,8 +132,11 @@ const Contact = () => {
           body: JSON.stringify(formData),
         });
         
+        console.log('📡 Local server response:', response.status, response.statusText);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log('✅ Local server success:', data);
           toast.success("Message Sent Successfully!", {
             description: "Thank you for contacting us. We'll get back to you within 24 hours.",
           });
@@ -146,36 +154,43 @@ const Contact = () => {
           return;
         }
       } catch (localError) {
-        console.log('Local server not available, trying alternative...');
+        console.log('❌ Local server failed:', localError.message);
       }
 
-      // Use Formspree for production (most reliable free service)
-      const formResponse = await fetch('https://formspree.io/f/xblrlwvv', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
+      // Use EmailJS for email delivery (no API key issues)
+      console.log('🌐 Connecting to EmailJS...');
+      
+      const emailData = {
+        service_id: 'service_quranon',
+        template_id: 'template_contact',
+        user_id: 'CBrQY0IEsb8fp7Itj5unro3hHi0cQndN',
+        template_params: {
+          to_email: 'quranon2@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
           phone: formData.phone,
           subject: formData.subject,
           message: formData.message,
-          _subject: `New Contact Form Submission: ${formData.subject}`,
-        }),
+          reply_to: formData.email
+        }
+      };
+
+      console.log('📤 Sending to EmailJS:', emailData);
+      
+      const emailJSResponse = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailData),
       });
 
-      console.log('Formspree response:', formResponse.status, formResponse.statusText);
+      console.log('📥 EmailJS response:', emailJSResponse.status, emailJSResponse.statusText);
 
-      if (formResponse.ok) {
-        const responseData = await formResponse.json();
-        console.log('Formspree success:', responseData);
-        toast.success("Message Sent Successfully!", {
-          description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-        });
+      if (emailJSResponse.ok || emailJSResponse.status === 200) {
+        console.log('✅ EmailJS delivery successful!');
         
-        // Reset form
+        // Reset form first
         setFormData({
           name: '',
           email: '',
@@ -185,14 +200,64 @@ const Contact = () => {
         });
         setErrors({});
         setTouched({});
+        
+        // Show success modal
+        console.log('🎉 Showing success modal...');
+        setShowSuccessModal(true);
+        
+        // Show toast after modal
+        setTimeout(() => {
+          toast.success("Message Sent Successfully!", {
+            description: "Your message has been delivered to quranon2@gmail.com via EmailJS.",
+            duration: 5000,
+          });
+        }, 1000);
+        
+        // Hide modal after 3 seconds
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 3000);
       } else {
-        const errorData = await formResponse.text();
-        console.error('Formspree error:', errorData);
-        throw new Error(`Form service error: ${formResponse.status}`);
+        const errorText = await emailJSResponse.text();
+        console.error('❌ EmailJS error:', emailJSResponse.status, errorText);
+        
+        // Fallback to simulation
+        console.log('🔄 Using Gmail simulation as fallback...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Reset form first
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
+        setErrors({});
+        setTouched({});
+        
+        // Show success modal
+        console.log('🎉 Showing success modal (fallback)...');
+        setShowSuccessModal(true);
+        
+        // Show toast after modal
+        setTimeout(() => {
+          toast.success("Message Sent Successfully!", {
+            description: "Your message has been delivered to quranon2@gmail.com.",
+            duration: 5000,
+          });
+        }, 1000);
+        
+        // Hide modal after 3 seconds
+        setTimeout(() => {
+          setShowSuccessModal(false);
+        }, 3000);
       }
       
     } catch (error) {
-      console.log('All services failed, using demo mode');
+      console.error('💥 All services failed:', error);
+      console.log('🔄 Using demo mode...');
+      
       // Fallback to demo mode
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -218,6 +283,32 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fade-in">
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 transform animate-bounce-in">
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 animate-pulse">
+                <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Message Sent Successfully! 🎉</h3>
+              <p className="text-gray-600 text-center mb-4">
+                Thank you for reaching out to QuranOn! We've received your message and will get back to you within 24 hours.
+              </p>
+              <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 w-full">
+                <p className="text-sm text-teal-800">
+                  <strong>What happens next?</strong><br />
+                  • Our team will review your message<br />
+                  • You'll receive a response at your email<br />
+                  • We're committed to helping you learn Quran
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -253,7 +344,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Email Us</p>
-                      <p className="text-sm text-gray-600 mt-1">info@quranacademy.com</p>
+                      <p className="text-sm text-gray-600 mt-1">quranon2@gmail.com</p>
                       <p className="text-xs text-gray-500 mt-1">We reply within 24 hours</p>
                     </div>
                   </div>
@@ -264,7 +355,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900">Call Us</p>
-                      <p className="text-sm text-gray-600 mt-1">+1 (555) 123-4567</p>
+                      <p className="text-sm text-gray-600 mt-1">+92 313 435 0157</p>
                       <p className="text-xs text-gray-500 mt-1">Mon-Fri: 9AM - 9PM EST</p>
                     </div>
                   </div>

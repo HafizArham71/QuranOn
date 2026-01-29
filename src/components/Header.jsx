@@ -30,7 +30,7 @@ const Header = () => {
               <BookOpen className="h-6 w-6 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-gray-900">Quran Online</span>
+              <span className="text-lg font-bold text-gray-900">QuranOn</span>
               <span className="text-xs text-teal-600">Learn with Confidence</span>
             </div>
           </Link>
