@@ -16,6 +16,12 @@
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+/* Force scroll to top on page load */
+html, body {
+  overflow-x: hidden;
 }
 
 /* Remove default focus outline and add custom one */

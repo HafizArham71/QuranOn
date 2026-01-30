@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import QuranOnChatbot from "./components/QuranOnChatbot";
+import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -21,6 +22,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter basename="/">
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
