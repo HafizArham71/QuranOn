@@ -7,7 +7,6 @@ import { Label } from '../components/ui/label';
 import { toast } from '../components/ui/sonner';
 import { Card, CardContent } from '../components/ui/card';
 import { getFieldError, validateEmail, validatePhone, validateName, validateMessage } from '../utils/validation';
-import { getApiUrl, isDevelopment } from '../utils/apiConfig';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,12 +20,11 @@ const Contact = () => {
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
   const [recaptchaToken, setRecaptchaToken] = useState(null);
   const [isRecaptchaLoading, setIsRecaptchaLoading] = useState(false);
-
-  const API_URL = getApiUrl();
+  
   const RECAPTCHA_SITE_KEY = "6Lc56VwsAAAAAKsrPNd5-4xZ4tpzysYLeLHog7R7";
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   // Load selected course from localStorage
   useEffect(() => {
@@ -39,10 +37,40 @@ const Contact = () => {
         subject: `Inquiry about ${course.title} - ${course.subtitle}`,
         message: `I'm interested in the ${course.title}. ${course.description}\n\nPlease provide more information about this course and the enrollment process.`
       }));
-      // Clear the saved course after loading
       localStorage.removeItem('selectedCourse');
     }
   }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: '',
+      });
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched({
+      ...touched,
+      [name]: true,
+    });
+
+    const error = getFieldError(name, value, name !== 'phone');
+    if (error) {
+      setErrors({
+        ...errors,
+        [name]: error,
+      });
+    }
+  };
 
   // Load reCAPTCHA Enterprise script
   useEffect(() => {
@@ -84,43 +112,9 @@ const Contact = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: '',
-      });
-    }
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    setTouched({
-      ...touched,
-      [name]: true,
-    });
-
-    // Validate field on blur
-    const error = getFieldError(name, value, name !== 'phone');
-    if (error) {
-      setErrors({
-        ...errors,
-        [name]: error,
-      });
-    }
-  };
-
   const validateForm = () => {
     const newErrors = {};
     
-    // Validate required fields
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
     } else if (!validateName(formData.name)) {
@@ -145,7 +139,6 @@ const Contact = () => {
       newErrors.message = 'Message must be between 10 and 2000 characters';
     }
 
-    // Validate optional phone
     if (formData.phone && !validatePhone(formData.phone)) {
       newErrors.phone = 'Please enter a valid phone number (at least 10 digits)';
     }
@@ -157,7 +150,6 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Mark all fields as touched
     setTouched({
       name: true,
       email: true,
@@ -166,7 +158,6 @@ const Contact = () => {
       message: true,
     });
 
-    // Validate form
     if (!validateForm()) {
       toast.error("Validation Error", {
         description: "Please fix the errors in the form before submitting.",
@@ -174,65 +165,21 @@ const Contact = () => {
       return;
     }
 
+    setIsSubmitting(true);
+
     // Execute reCAPTCHA Enterprise before submission
     if (!recaptchaToken) {
       const token = await executeRecaptcha();
       if (!token) {
+        setIsSubmitting(false);
         return;
       }
     }
 
-    setIsSubmitting(true);
-
     try {
-      console.log('🚀 Starting form submission...');
-      console.log('📝 Form data:', formData);
+      console.log('🚀 Submitting to Formspree...');
       
-      // Try to send real email via backend server first
-      try {
-        console.log('🔍 Trying local server...');
-        const response = await fetch('http://localhost:3001/api/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData),
-        });
-        
-        console.log('📡 Local server response:', response.status, response.statusText);
-        
-        if (response.ok) {
-          const data = await response.json();
-          console.log('✅ Local server success:', data);
-          toast.success("Message Sent Successfully!", {
-            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
-          });
-          
-          // Reset form
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            subject: '',
-            message: '',
-          });
-          setErrors({});
-          setTouched({});
-          setRecaptchaToken(null);
-          
-          // Reset reCAPTCHA
-          if (window.grecaptcha) {
-            window.grecaptcha.reset();
-          }
-          return;
-        }
-      } catch (localError) {
-        console.log('❌ Local server failed:', localError.message);
-      }
-
-      // Use Formspree for email delivery (100% free, Gmail compatible)
-      console.log('🌐 Connecting to Formspree...');
-      
+      // Use FormData exactly like the trial form
       const formspreeData = new FormData();
       formspreeData.append('name', formData.name);
       formspreeData.append('email', formData.email);
@@ -243,7 +190,7 @@ const Contact = () => {
 
       console.log('📤 Sending to Formspree:', Object.fromEntries(formspreeData));
       
-      const formspreeResponse = await fetch('https://formspree.io/f/xeekgpqv', {
+      const formspreeResponse = await fetch('https://formspree.io/f/mvzqzkej', {
         method: 'POST',
         body: formspreeData,
         headers: {
@@ -253,10 +200,10 @@ const Contact = () => {
 
       console.log('📥 Formspree response:', formspreeResponse.status, formspreeResponse.statusText);
 
-      if (formspreeResponse.ok || formspreeResponse.status === 200) {
-        console.log('✅ Formspree delivery successful!');
+      if (formspreeResponse.ok) {
+        console.log('✅ Form submitted successfully!');
         
-        // Reset form first
+        // Reset form
         setFormData({
           name: '',
           email: '',
@@ -268,79 +215,33 @@ const Contact = () => {
         setTouched({});
         setRecaptchaToken(null);
         
-                
         // Show success modal
-        console.log('🎉 Showing success modal...');
         setShowSuccessModal(true);
         
-        // Show toast after modal
         setTimeout(() => {
           toast.success("Message Sent Successfully!", {
-            description: "Your message has been delivered to QuranOn.",
+            description: "Thank you for contacting us. We'll get back to you within 24 hours.",
             duration: 5000,
           });
         }, 1000);
+        
       } else {
         const errorText = await formspreeResponse.text();
-        console.error('❌ Formspree error:', formspreeResponse.status, errorText);
+        console.error('❌ Form submission failed:', formspreeResponse.status, errorText);
         
-        // Fallback to simulation
-        console.log('🔄 Using Gmail simulation as fallback...');
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        // Reset form first
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: '',
+        toast.error("Submission Failed", {
+          description: "Unable to send message. Please try again or contact us directly at quranon2@gmail.com",
+          duration: 5000,
         });
-        setErrors({});
-        setTouched({});
-        setRecaptchaToken(null);
-        
-                
-        // Show success modal
-        console.log('🎉 Showing success modal (fallback)...');
-        setShowSuccessModal(true);
-        
-        // Show toast after modal
-        setTimeout(() => {
-          toast.success("Message Sent Successfully!", {
-            description: "Your message has been delivered to QuranOn.",
-            duration: 5000,
-          });
-        }, 1000);
       }
       
     } catch (error) {
-      console.error('💥 All services failed:', error);
-      console.log('🔄 Using demo mode...');
+      console.error('💥 Network error:', error);
       
-      // Fallback to demo mode
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Message Received! (Demo Mode)", {
-        description: "This is a demo response. For real emails, please contact us directly at quranon2@gmail.com",
+      toast.error("Network Error", {
+        description: "Unable to connect. Please check your internet connection and try again.",
+        duration: 5000,
       });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
-      });
-      setErrors({});
-      setTouched({});
-      setRecaptchaToken(null);
-      
-      // Reset reCAPTCHA
-      if (window.grecaptcha) {
-        window.grecaptcha.reset();
-      }
       
     } finally {
       setIsSubmitting(false);
@@ -392,6 +293,7 @@ const Contact = () => {
           </div>
         </div>
       )} 
+
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -605,25 +507,22 @@ const Contact = () => {
                       </div>
                     </div>
 
-                    {/* reCAPTCHA Enterprise - Invisible */}
-                    <div className="mb-6">
-                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                        <div className="flex items-center space-x-2">
-                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>
-                          <span className="text-sm font-medium text-gray-700">
-                            {isRecaptchaLoading ? 'Verifying...' : 'Protected by reCAPTCHA Enterprise'}
-                          </span>
+                    {/* reCAPTCHA Enterprise - Compact */}
+                    <div className="pt-3">
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <svg className="h-4 w-4 text-teal-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            <span className="text-xs font-medium text-gray-700">
+                              {isRecaptchaLoading ? 'Securing...' : 'Protected by reCAPTCHA'}
+                            </span>
+                          </div>
                           {isRecaptchaLoading && (
-                            <div className="ml-auto">
-                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-cyan-600"></div>
-                            </div>
+                            <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-teal-600"></div>
                           )}
                         </div>
-                        <p className="text-xs text-gray-500 mt-2">
-                          Advanced security verification runs automatically when you submit the form.
-                        </p>
                       </div>
                     </div>
 

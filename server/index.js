@@ -70,15 +70,21 @@ app.post('/api/contact', async (req, res) => {
       subject,
       message
     });
-    console.log("submission", submission)
-    // Send email
-    await sendContactEmail({
-      name,
-      email,
-      phone: phone || 'Not provided',
-      subject,
-      message
-    });
+    console.log("submission", submission);
+
+    // Try to send email, but don't fail if email is not configured
+    try {
+      await sendContactEmail({
+        name,
+        email,
+        phone: phone || 'Not provided',
+        subject,
+        message
+      });
+      console.log('✅ Email sent successfully');
+    } catch (emailError) {
+      console.warn('⚠️ Email failed but submission saved:', emailError.message);
+    }
 
     res.json({ 
       success: true, 
