@@ -61,18 +61,108 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div className="prose prose-lg max-w-none">
-            {post.content.split('\n').map((paragraph, index) => {
-              if (paragraph.startsWith('## ')) {
-                return <h2 key={index} className="text-2xl font-bold text-gray-900 mt-8 mb-4">{paragraph.replace('## ', '')}</h2>;
-              } else if (paragraph.startsWith('### ')) {
-                return <h3 key={index} className="text-xl font-semibold text-gray-900 mt-6 mb-3">{paragraph.replace('### ', '')}</h3>;
-              } else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
-                return <p key={index} className="text-gray-800 font-semibold mb-4">{paragraph.replace(/\*\*/g, '')}</p>;
-              } else if (paragraph.trim() !== '') {
-                return <p key={index} className="text-gray-700 mb-4 leading-relaxed">{paragraph}</p>;
+            {(() => {
+              const parseBoldText = (text) => {
+                const parts = [];
+                let currentIndex = 0;
+                
+                while (currentIndex < text.length) {
+                  const boldStart = text.indexOf('**', currentIndex);
+                  
+                  if (boldStart === -1) {
+                    // No more bold text, add remaining text
+                    if (currentIndex < text.length) {
+                      parts.push(text.slice(currentIndex));
+                    }
+                    break;
+                  }
+                  
+                  // Add text before bold
+                  if (boldStart > currentIndex) {
+                    parts.push(text.slice(currentIndex, boldStart));
+                  }
+                  
+                  // Find end of bold
+                  const boldEnd = text.indexOf('**', boldStart + 2);
+                  if (boldEnd === -1) {
+                    // Unclosed bold, add as regular text
+                    parts.push(text.slice(currentIndex));
+                    break;
+                  }
+                  
+                  // Add bold text
+                  const boldText = text.slice(boldStart + 2, boldEnd);
+                  parts.push(<strong key={currentIndex} className="font-semibold text-gray-900">{boldText}</strong>);
+                  
+                  currentIndex = boldEnd + 2;
+                }
+                
+                return parts;
+              };
+              
+              const paragraphs = post.content.split('\n');
+              const elements = [];
+              let listItems = [];
+              
+              paragraphs.forEach((paragraph, index) => {
+                if (paragraph.startsWith('- ')) {
+                  // Add to current list
+                  listItems.push(
+                    <li key={index} className="text-gray-700 mb-2 leading-relaxed">
+                      {parseBoldText(paragraph.replace('- ', ''))}
+                    </li>
+                  );
+                } else {
+                  // If we have pending list items, close the list first
+                  if (listItems.length > 0) {
+                    elements.push(
+                      <ul key={`list-${index}`} className="list-disc list-inside mb-4 space-y-2">
+                        {listItems}
+                      </ul>
+                    );
+                    listItems = [];
+                  }
+                  
+                  // Handle other content types
+                  if (paragraph.startsWith('## ')) {
+                    elements.push(
+                      <h2 key={index} className="text-2xl font-bold text-gray-900 mt-8 mb-4">
+                        {parseBoldText(paragraph.replace('## ', ''))}
+                      </h2>
+                    );
+                  } else if (paragraph.startsWith('### ')) {
+                    elements.push(
+                      <h3 key={index} className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                        {parseBoldText(paragraph.replace('### ', ''))}
+                      </h3>
+                    );
+                  } else if (paragraph.includes('**')) {
+                    elements.push(
+                      <p key={index} className="text-gray-700 mb-4 leading-relaxed">
+                        {parseBoldText(paragraph)}
+                      </p>
+                    );
+                  } else if (paragraph.trim() !== '') {
+                    elements.push(
+                      <p key={index} className="text-gray-700 mb-4 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    );
+                  }
+                }
+              });
+              
+              // Add any remaining list items
+              if (listItems.length > 0) {
+                elements.push(
+                  <ul key="list-final" className="list-disc list-inside mb-4 space-y-2">
+                    {listItems}
+                  </ul>
+                );
               }
-              return null;
-            })}
+              
+              return elements;
+            })()}
           </div>
 
           {/* CTA at End of Article */}

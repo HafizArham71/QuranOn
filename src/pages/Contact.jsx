@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, MessageCircle, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -21,8 +21,68 @@ const Contact = () => {
   const [touched, setTouched] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const [isRecaptchaLoading, setIsRecaptchaLoading] = useState(false);
 
   const API_URL = getApiUrl();
+  const RECAPTCHA_SITE_KEY = "6Lc56VwsAAAAAKsrPNd5-4xZ4tpzysYLeLHog7R7";
+
+  // Load selected course from localStorage
+  useEffect(() => {
+    const savedCourse = localStorage.getItem('selectedCourse');
+    if (savedCourse) {
+      const course = JSON.parse(savedCourse);
+      setSelectedCourse(course);
+      setFormData(prev => ({
+        ...prev,
+        subject: `Inquiry about ${course.title} - ${course.subtitle}`,
+        message: `I'm interested in the ${course.title}. ${course.description}\n\nPlease provide more information about this course and the enrollment process.`
+      }));
+      // Clear the saved course after loading
+      localStorage.removeItem('selectedCourse');
+    }
+  }, []);
+
+  // Load reCAPTCHA Enterprise script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/enterprise.js?render=6Lc56VwsAAAAAKsrPNd5-4xZ4tpzysYLeLHog7R7';
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
+
+  // Execute reCAPTCHA Enterprise
+  const executeRecaptcha = async () => {
+    setIsRecaptchaLoading(true);
+    try {
+      const token = await new Promise((resolve, reject) => {
+        window.grecaptcha.enterprise.ready(async () => {
+          try {
+            const token = await window.grecaptcha.enterprise.execute('6Lc56VwsAAAAAKsrPNd5-4xZ4tpzysYLeLHog7R7', {action: 'CONTACT_FORM'});
+            resolve(token);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      });
+      setRecaptchaToken(token);
+      setIsRecaptchaLoading(false);
+      return token;
+    } catch (error) {
+      console.error('reCAPTCHA Enterprise error:', error);
+      setIsRecaptchaLoading(false);
+      toast.error("Security Verification Failed", {
+        description: "Please try again or refresh the page.",
+      });
+      return null;
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -114,6 +174,14 @@ const Contact = () => {
       return;
     }
 
+    // Execute reCAPTCHA Enterprise before submission
+    if (!recaptchaToken) {
+      const token = await executeRecaptcha();
+      if (!token) {
+        return;
+      }
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -150,6 +218,12 @@ const Contact = () => {
           });
           setErrors({});
           setTouched({});
+          setRecaptchaToken(null);
+          
+          // Reset reCAPTCHA
+          if (window.grecaptcha) {
+            window.grecaptcha.reset();
+          }
           return;
         }
       } catch (localError) {
@@ -165,6 +239,7 @@ const Contact = () => {
       formspreeData.append('phone', formData.phone);
       formspreeData.append('subject', formData.subject);
       formspreeData.append('message', formData.message);
+      formspreeData.append('g-recaptcha-response', recaptchaToken);
 
       console.log('📤 Sending to Formspree:', Object.fromEntries(formspreeData));
       
@@ -191,7 +266,9 @@ const Contact = () => {
         });
         setErrors({});
         setTouched({});
+        setRecaptchaToken(null);
         
+                
         // Show success modal
         console.log('🎉 Showing success modal...');
         setShowSuccessModal(true);
@@ -199,15 +276,10 @@ const Contact = () => {
         // Show toast after modal
         setTimeout(() => {
           toast.success("Message Sent Successfully!", {
-            description: "Your message has been delivered to quranon2@gmail.com via Formspree.",
+            description: "Your message has been delivered to QuranOn.",
             duration: 5000,
           });
         }, 1000);
-        
-        // Hide modal after 3 seconds
-        setTimeout(() => {
-          setShowSuccessModal(false);
-        }, 3000);
       } else {
         const errorText = await formspreeResponse.text();
         console.error('❌ Formspree error:', formspreeResponse.status, errorText);
@@ -226,7 +298,9 @@ const Contact = () => {
         });
         setErrors({});
         setTouched({});
+        setRecaptchaToken(null);
         
+                
         // Show success modal
         console.log('🎉 Showing success modal (fallback)...');
         setShowSuccessModal(true);
@@ -234,15 +308,10 @@ const Contact = () => {
         // Show toast after modal
         setTimeout(() => {
           toast.success("Message Sent Successfully!", {
-            description: "Your message has been delivered to quranon2@gmail.com.",
+            description: "Your message has been delivered to QuranOn.",
             duration: 5000,
           });
         }, 1000);
-        
-        // Hide modal after 3 seconds
-        setTimeout(() => {
-          setShowSuccessModal(false);
-        }, 3000);
       }
       
     } catch (error) {
@@ -266,6 +335,12 @@ const Contact = () => {
       });
       setErrors({});
       setTouched({});
+      setRecaptchaToken(null);
+      
+      // Reset reCAPTCHA
+      if (window.grecaptcha) {
+        window.grecaptcha.reset();
+      }
       
     } finally {
       setIsSubmitting(false);
@@ -277,7 +352,18 @@ const Contact = () => {
       {/* Success Modal */}
       {showSuccessModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 transform animate-bounce-in">
+          <div className="bg-white rounded-2xl p-8 max-w-md mx-4 transform animate-bounce-in relative">
+            {/* Close Button */}
+            <button
+              onClick={() => setShowSuccessModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Close modal"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+            
             <div className="flex flex-col items-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 animate-pulse">
                 <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -296,10 +382,16 @@ const Contact = () => {
                   • We're committed to helping you learn Quran
                 </p>
               </div>
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="mt-6 px-6 py-2 bg-gradient-to-r from-cyan-500 to-teal-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-teal-700 transition-all duration-300"
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
-      )}
+      )} 
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -308,8 +400,13 @@ const Contact = () => {
               Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-teal-600">Us</span>
             </h1>
             <p className="mt-4 text-lg text-gray-700 max-w-3xl mx-auto">
-              Have questions? We're here to help. Reach out to us anytime.
+              We're here to help you on your Quran learning journey. Reach out anytime and we'll respond within 24 hours.
             </p>
+            {selectedCourse && (
+              <div className="mt-6 inline-flex items-center bg-gradient-to-r from-cyan-500 to-teal-600 text-white px-6 py-3 rounded-full shadow-lg">
+                <span className="font-medium">📚 {selectedCourse.title} selected</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -505,6 +602,28 @@ const Contact = () => {
                             {formData.message.length}/2000 characters
                           </p>
                         )}
+                      </div>
+                    </div>
+
+                    {/* reCAPTCHA Enterprise - Invisible */}
+                    <div className="mb-6">
+                      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div className="flex items-center space-x-2">
+                          <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                          <span className="text-sm font-medium text-gray-700">
+                            {isRecaptchaLoading ? 'Verifying...' : 'Protected by reCAPTCHA Enterprise'}
+                          </span>
+                          {isRecaptchaLoading && (
+                            <div className="ml-auto">
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-cyan-600"></div>
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-xs text-gray-500 mt-2">
+                          Advanced security verification runs automatically when you submit the form.
+                        </p>
                       </div>
                     </div>
 
