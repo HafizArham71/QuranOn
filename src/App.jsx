@@ -19,7 +19,7 @@ import Testimonials from "./pages/Testimonials";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import BookTrial from "./pages/BookTrial";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PrivacyPolicy from "./pages/PrivacyPolicySimple";
 import TermsOfService from "./pages/TermsOfService";
 
 function App() {

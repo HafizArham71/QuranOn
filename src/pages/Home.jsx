@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { ArrowRight, CheckCircle, Users, Globe, Award, Clock, BookOpen, Brain, Mic2, Heart } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Globe, Award, Clock, BookOpen, Brain, Mic2, Heart, Star, ChevronDown } from 'lucide-react';
 
 import { Button } from '../components/ui/button';
 
@@ -49,69 +49,123 @@ const Home = () => {
     <div className="min-h-screen">
 
       {/* Hero Section */}
-
-      <section className="relative overflow-hidden bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-20 sm:py-28">
-
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiMwZDk0ODgiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDE2djguMDczbDEwIDEwVjE2em0wIDI4djUuOTI3bDEwLTEwVjQ0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-40"></div>
-
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-          <div className="text-center">
-
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-
-              {homeData.hero.title}
-
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-teal-600 mt-2">
-
-                {homeData.hero.subtitle}
-
-              </span>
-
-            </h1>
-
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-700 sm:text-xl">
-
-              {homeData.hero.description}
-
-            </p>
-
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-
-              <Link to="/book-trial">
-
-                <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-semibold shadow-lg text-base px-8 py-6 transition-all duration-300">
-
-                  Start Your Free Trial
-
-                  <ArrowRight className="ml-2 h-5 w-5" />
-
-                </Button>
-
-              </Link>
-
-              <Link to="/courses">
-
-                <Button size="lg" variant="outline" className="border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-semibold text-base px-8 py-6 transition-all duration-300">
-
-                  Explore Courses
-
-                </Button>
-
-              </Link>
-
-            </div>
-
-            <p className="mt-6 text-sm text-gray-600">
-
-              No credit card required • Free trial class • Expert support
-
-            </p>
-
-          </div>
-
+      <section className="relative min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-emerald-100/30 via-transparent to-cyan-100/30"></div>
+          <div className="absolute top-20 left-10 w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-40 right-20 w-48 h-48 bg-teal-400/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute bottom-20 left-1/3 w-56 h-56 bg-cyan-400/10 rounded-full blur-3xl animate-pulse delay-500"></div>
         </div>
-
+        
+        {/* Main Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
+          <div className="text-center">
+            {/* Trust Badge */}
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 border border-emerald-200 mb-8">
+              <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+              <span className="text-emerald-700 text-sm font-medium">Trusted by 10,000+ Muslim Families Worldwide</span>
+            </div>
+            
+            {/* Main Heading */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-6">
+              <span className="block mb-2">Learn Quran Online with</span>
+              <span className="block bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                Expert Teachers
+              </span>
+            </h1>
+            
+            {/* Description */}
+            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+              One-on-one live Quran classes with certified teachers. Personalized learning that adapts to your child's pace and schedule.
+            </p>
+            
+            {/* Stats */}
+            <div className="flex flex-wrap justify-center items-center gap-8 mb-12">
+              <div className="flex items-center space-x-2">
+                <Users className="h-6 w-6 text-emerald-600" />
+                <span className="text-2xl font-bold text-gray-900">10,000+</span>
+                <span className="text-gray-600">Students</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Award className="h-6 w-6 text-emerald-600" />
+                <span className="text-2xl font-bold text-gray-900">500+</span>
+                <span className="text-gray-600">Teachers</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Globe className="h-6 w-6 text-emerald-600" />
+                <span className="text-2xl font-bold text-gray-900">50+</span>
+                <span className="text-gray-600">Countries</span>
+              </div>
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
+              <Link to="/book-trial">
+                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 px-12 py-6 text-lg">
+                  Start Free Trial
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </Button>
+              </Link>
+              
+              <Link to="/courses">
+                <Button size="lg" variant="outline" className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-semibold transition-all duration-300 px-12 py-6 text-lg">
+                  View Courses
+                </Button>
+              </Link>
+            </div>
+            
+            {/* Features */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
+                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <BookOpen className="h-6 w-6 text-emerald-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Quran Reading</h3>
+                <p className="text-gray-600 text-sm">From basics to fluent recitation</p>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
+                <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Brain className="h-6 w-6 text-teal-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Memorization</h3>
+                <p className="text-gray-600 text-sm">Structured Hifz programs</p>
+              </div>
+              
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
+                <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Mic2 className="h-6 w-6 text-cyan-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">Tajweed</h3>
+                <p className="text-gray-600 text-sm">Perfect pronunciation</p>
+              </div>
+            </div>
+            
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-8 mt-12 text-gray-600">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span>No credit card required</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span>Free trial class</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span>Expert teachers</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom Wave */}
+        <div className="absolute bottom-0 left-0 w-full">
+          <svg className="w-full h-24 text-white" viewBox="0 0 1440 120" fill="currentColor">
+            <path d="M0,64 C80,48 160,32 240,32 C320,32 400,48 480,64 C560,80 640,96 720,96 C800,96 880,80 960,64 C1040,48 1120,32 1200,32 C1280,32 1360,48 1440,64 L1440,120 L0,120 Z" />
+          </svg>
+        </div>
       </section>
 
 

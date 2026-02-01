@@ -641,3 +641,255 @@ export const courses = [
     level: "Intermediate"
   }
 ];
+
+// Privacy Policy Content API
+export const privacyPolicyData = {
+  header: {
+    title: "Privacy Policy",
+    subtitle: "Your privacy is our sacred trust. We protect your information with the utmost care.",
+    lastUpdated: new Date().toLocaleDateString()
+  },
+  sections: [
+    {
+      id: "commitment",
+      title: "Our Commitment to Your Privacy",
+      content: "At QuranOn, we understand that privacy is not just a legal requirement but a fundamental right. This Privacy Policy explains how we collect, use, protect, and share your information when you use our Quran learning platform. By using QuranOn, you trust us with your personal information, and we take that responsibility seriously."
+    },
+    {
+      id: "information-collected",
+      title: "Information We Collect",
+      subsections: [
+        {
+          title: "Personal Information",
+          items: [
+            "Name and contact details (email, phone)",
+            "Student information (age, learning goals)",
+            "Payment information (processed securely)",
+            "Communication preferences"
+          ]
+        },
+        {
+          title: "Learning Data",
+          items: [
+            "Course progress and completion status",
+            "Session attendance and participation",
+            "Learning preferences and feedback",
+            "Performance metrics and achievements"
+          ]
+        },
+        {
+          title: "Technical Information",
+          items: [
+            "IP address and device information",
+            "Browser type and operating system",
+            "Usage patterns and session duration",
+            "Cookies and similar technologies"
+          ]
+        }
+      ]
+    },
+    {
+      id: "how-we-use",
+      title: "How We Use Your Information",
+      categories: [
+        {
+          title: "Service Delivery",
+          items: [
+            "Provide personalized Quran education",
+            "Schedule and manage learning sessions",
+            "Track progress and achievements",
+            "Communicate important updates"
+          ]
+        },
+        {
+          title: "Platform Improvement",
+          items: [
+            "Enhance user experience",
+            "Develop new features",
+            "Analyze usage patterns",
+            "Ensure platform security"
+          ]
+        },
+        {
+          title: "Communication",
+          items: [
+            "Send learning materials",
+            "Provide customer support",
+            "Share important announcements",
+            "Request feedback and reviews"
+          ]
+        },
+        {
+          title: "Legal Compliance",
+          items: [
+            "Meet regulatory requirements",
+            "Prevent fraud and abuse",
+            "Ensure platform safety",
+            "Protect user rights"
+          ]
+        }
+      ]
+    },
+    {
+      id: "data-protection",
+      title: "Data Protection & Security",
+      securityMeasures: [
+        "256-bit SSL encryption for all data transmission",
+        "Secure payment processing with PCI compliance",
+        "Regular security audits and vulnerability testing",
+        "Strict access controls and authentication"
+      ]
+    },
+    {
+      id: "your-rights",
+      title: "Your Privacy Rights",
+      rights: [
+        {
+          number: 1,
+          title: "Access & Review",
+          description: "Request access to your personal information and review how it's being used."
+        },
+        {
+          number: 2,
+          title: "Correction & Update",
+          description: "Correct inaccurate or incomplete personal information."
+        },
+        {
+          number: 3,
+          title: "Data Deletion",
+          description: "Request deletion of your personal information where legally permitted."
+        },
+        {
+          number: 4,
+          title: "Opt-out Options",
+          description: "Control marketing communications and certain data processing activities."
+        }
+      ]
+    }
+  ],
+  contact: {
+    title: "Questions About Your Privacy?",
+    description: "If you have any questions, concerns, or requests regarding this Privacy Policy or your personal information, please don't hesitate to contact us.",
+    email: "quranon2@gmail.com",
+    phone: "+92 313 435 0157",
+    address: "123 Islamic Education Lane, Learning City, LC 12345",
+    responseTime: "Within 7 business days"
+  }
+};
+
+// Terms of Service Content API
+export const termsOfServiceData = {
+  header: {
+    title: "Terms of Service",
+    subtitle: "Welcome to QuranOn. These terms govern your use of our Quran learning platform and services.",
+    lastUpdated: new Date().toLocaleDateString()
+  },
+  sections: [
+    {
+      id: "agreement",
+      title: "Agreement to Terms",
+      content: "By accessing and using QuranOn, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using our services. Using QuranOn indicates your acceptance of these terms and your commitment to uphold them in the spirit of Islamic learning and mutual respect."
+    },
+    {
+      id: "services",
+      title: "Our Services",
+      categories: [
+        {
+          title: "Educational Services",
+          items: [
+            "Live Quran reading and memorization classes",
+            "One-on-one tutoring with qualified instructors",
+            "Group learning sessions and workshops",
+            "Progress tracking and assessment tools",
+            "Islamic studies and Arabic language courses"
+          ]
+        },
+        {
+          title: "Platform Features",
+          items: [
+            "Interactive learning materials",
+            "Video conferencing capabilities",
+            "Progress monitoring dashboard",
+            "Parent/guardian access for minor students",
+            "Mobile app for on-the-go learning"
+          ]
+        }
+      ],
+      note: "We reserve the right to modify, suspend, or discontinue any part of our services at any time without prior notice. We will strive to provide advance notice for significant changes."
+    },
+    {
+      id: "responsibilities",
+      title: "User Responsibilities",
+      categories: [
+        {
+          title: "Account Security",
+          items: [
+            "Maintain confidentiality of your login credentials",
+            "Notify us immediately of unauthorized access",
+            "Use strong, unique passwords",
+            "Log out from shared devices"
+          ]
+        },
+        {
+          title: "Conduct Guidelines",
+          items: [
+            "Respect instructors and fellow students",
+            "Maintain Islamic etiquette during sessions",
+            "Participate actively and respectfully",
+            "Avoid disruptive or inappropriate behavior"
+          ]
+        },
+        {
+          title: "Academic Integrity",
+          items: [
+            "Complete your own work honestly",
+            "Attend scheduled sessions punctually",
+            "Provide accurate information",
+            "Follow instructor guidance respectfully"
+          ]
+        }
+      ]
+    },
+    {
+      id: "payment",
+      title: "Payment Terms",
+      feeStructure: [
+        "Monthly subscription plans available",
+        "Pay-per-session options",
+        "Family discount packages",
+        "Scholarship opportunities"
+      ],
+      policies: [
+        {
+          title: "Payment Schedule",
+          content: "Payments are due in advance of the service period. Late payments may result in service suspension until payment is received."
+        },
+        {
+          title: "Refund Policy",
+          content: "Refunds are available within 7 days of purchase if you're not satisfied with our services. After 7 days, refunds are prorated based on unused services."
+        }
+      ]
+    },
+    {
+      id: "prohibited",
+      title: "Prohibited Activities",
+      activities: [
+        "Sharing account credentials with others",
+        "Recording sessions without permission",
+        "Harassment or discrimination of any kind",
+        "Attempting to hack or disrupt our platform",
+        "Using services for illegal or immoral purposes",
+        "Impersonating instructors or staff"
+      ],
+      note: "The following activities are strictly prohibited and may result in immediate account termination:"
+    }
+  ],
+  contact: {
+    title: "Questions About These Terms?",
+    description: "If you have any questions about these Terms of Service, please contact us. We're here to help clarify any concerns and ensure you have a positive learning experience.",
+    legalEmail: "quranon2@gmail.com",
+    supportEmail: "quranon2@gmail.com",
+    phone: "+92 313 435 0157",
+    officeHours: "Mon-Fri: 9AM-6PM EST"
+  }
+};
