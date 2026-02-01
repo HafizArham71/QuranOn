@@ -115,30 +115,31 @@ const TermsOfService = () => {
           </div>
         </div>
 
-        {/* Intellectual Property */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">{sections[5].title}</h2>
-          
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">{sections[5].ourContent.title}</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {sections[5].ourContent.content}
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">{sections[5].yourLicense.title}</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {sections[5].yourLicense.content}
-              </p>
-            </div>
-
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2">{sections[5].restrictions.title}</h3>
-              <p className="text-gray-600 leading-relaxed">
-                {sections[5].restrictions.content}
-              </p>
+        {/* Contact Information */}
+        {/* Contact Information */}
+        <div className="bg-gradient-to-r from-cyan-600 to-teal-600 rounded-2xl shadow-xl p-8 text-white">
+          <h2 className="text-2xl font-bold mb-6">{contact.title}</h2>
+          <p className="text-white/90 mb-6">
+            {contact.description}
+          </p>
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <h3 className="font-semibold mb-2">Legal Inquiries</h3>
+                <p className="text-white/90">{contact.legalEmail}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">General Support</h3>
+                <p className="text-white/90">{contact.supportEmail}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Phone Support</h3>
+                <p className="text-white/90">{contact.phone}</p>
+              </div>
+              <div>
+                <h3 className="font-semibold mb-2">Office Hours</h3>
+                <p className="text-white/90">{contact.officeHours}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -179,34 +180,6 @@ const TermsOfService = () => {
                 We may terminate or suspend your account immediately for violation of these terms, 
                 fraudulent activity, or any reason that threatens our platform integrity.
               </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact Information */}
-        <div className="bg-gradient-to-r from-cyan-600 to-teal-600 rounded-2xl shadow-xl p-8 text-white">
-          <h2 className="text-2xl font-bold mb-6">{contact.title}</h2>
-          <p className="text-white/90 mb-6">
-            {contact.description}
-          </p>
-          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-6">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-semibold mb-2">Legal Inquiries</h3>
-                <p className="text-white/90">{contact.legalEmail}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">General Support</h3>
-                <p className="text-white/90">{contact.supportEmail}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">Phone Support</h3>
-                <p className="text-white/90">{contact.phone}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-2">Office Hours</h3>
-                <p className="text-white/90">{contact.officeHours}</p>
-              </div>
             </div>
           </div>
         </div>
