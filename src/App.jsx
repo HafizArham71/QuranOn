@@ -14,7 +14,7 @@ import Courses from "./pages/Courses";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Testimonials from "./pages/Testimonials";
-import FAQs from "./pages/FAQs";
+import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import BookTrial from "./pages/BookTrial";
 
@@ -32,7 +32,7 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/testimonials" element={<Testimonials />} />
-          <Route path="/faqs" element={<FAQs />} />
+          <Route path="/faqs" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/book-trial" element={<BookTrial />} />
         </Routes>

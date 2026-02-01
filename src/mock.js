@@ -8,8 +8,7 @@ export const teachers = [
     experience: "12+ years",
     specialization: "Tajweed & Hifz",
     languages: ["English", "Urdu", "Arabic"],
-    bio: "Qari Abdul Rahman is a dedicated Quran teacher with over 12 years of experience in teaching students of all ages. His patient and compassionate approach makes learning enjoyable and effective.",
-    image: "https://ui-avatars.com/api/?name=Abdul+Rahman&size=200&background=0891b2&color=fff"
+    bio: "Qari Abdul Rahman is a dedicated Quran teacher with over 12 years of experience in teaching students of all ages. His patient and compassionate approach makes learning enjoyable and effective."
   },
   {
     id: 2,
@@ -18,8 +17,7 @@ export const teachers = [
     experience: "10+ years",
     specialization: "Nazira & Tajweed for Women & Children",
     languages: ["English", "Urdu"],
-    bio: "Ustadha Fatima specializes in teaching female students and children with a nurturing approach. Her expertise in Tajweed helps students perfect their Quran recitation beautifully.",
-    image: "https://ui-avatars.com/api/?name=Fatima+Ahmed&size=200&background=0891b2&color=fff"
+    bio: "Ustadha Fatima specializes in teaching female students and children with a nurturing approach. Her expertise in Tajweed helps students perfect their Quran recitation beautifully."
   },
   {
     id: 3,
@@ -28,8 +26,7 @@ export const teachers = [
     experience: "15+ years",
     specialization: "Hifz & Tafseer",
     languages: ["English", "Urdu", "Arabic"],
-    bio: "Sheikh Muhammad Ali brings extensive knowledge of Islamic studies along with Quran memorization techniques. His structured approach ensures steady progress for every student.",
-    image: "https://ui-avatars.com/api/?name=Muhammad+Ali&size=200&background=0891b2&color=fff"
+    bio: "Sheikh Muhammad Ali brings extensive knowledge of Islamic studies along with Quran memorization techniques. His structured approach ensures steady progress for every student."
   },
   {
     id: 4,
@@ -38,51 +35,55 @@ export const teachers = [
     experience: "8+ years",
     specialization: "Children's Quran Education",
     languages: ["English", "Urdu"],
-    bio: "Qaria Aisha is passionate about teaching young learners. Her creative teaching methods and gentle nature make her a favorite among children and parents alike.",
-    image: "https://ui-avatars.com/api/?name=Aisha+Khan&size=200&background=0891b2&color=fff"
+    bio: "Qaria Aisha is passionate about teaching young learners. Her creative teaching methods and gentle nature make her a favorite among children and parents alike."
   }
 ];
 
 export const testimonials = [
   {
     id: 1,
-    name: "Sarah Johnson",
-    location: "London, UK",
+    name: "Aisha Khan",
+    location: "Manchester, UK",
     rating: 5,
-    text: "My two children have been learning with this academy for 6 months now. The teachers are incredibly patient and knowledgeable. I've seen remarkable improvement in their recitation and understanding. Highly recommended!",
-    course: "Quran Nazira for Kids"
+    text: "Alhamdulillah! My daughter completed her first Juz in just 3 months. The teacher's patience and structured approach made all the difference. We're so grateful for this blessed academy.",
+    course: "Nazira",
+    image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
     id: 2,
-    name: "Ahmed Hassan",
+    name: "Mohammed Ibrahim",
     location: "Toronto, Canada",
     rating: 5,
-    text: "As an adult learner, I was nervous to start my Quran journey. The one-on-one classes made all the difference. My teacher was supportive and adapted lessons to my pace. Alhamdulillah, I can now recite with proper Tajweed.",
-    course: "Tajweed Course"
+    text: "As a revert to Islam, I struggled with Arabic pronunciation. The one-on-one Tajweed classes transformed my recitation. Now I can lead Taraweeh prayers with confidence.",
+    course: "Tajweed",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
     id: 3,
-    name: "Fatima Ali",
+    name: "Fatima Al-Rashid",
     location: "Dubai, UAE",
     rating: 5,
-    text: "Excellent academy! My daughter is working on her Hifz and the structured program keeps her motivated. The flexible scheduling works perfectly with our family routine. May Allah reward the entire team.",
-    course: "Hifz-ul-Quran"
+    text: "My son is memorizing the Quran with beautiful Tajweed. The teachers are true scholars who understand both traditional methods and modern teaching techniques. BarakAllahu feekum!",
+    course: "Hifz",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
     id: 4,
-    name: "Omar Abdullah",
+    name: "Abdullah Malik",
     location: "Sydney, Australia",
     rating: 5,
-    text: "Professional, trustworthy, and effective. The bilingual support (English/Urdu) helps my son understand concepts better. The teachers truly care about their students' progress. Five stars!",
-    course: "Quran with Duas"
+    text: "Our family learns together now. The flexible scheduling allows both parents and children to study. The Islamic knowledge combined with Quran recitation is exactly what we needed.",
+    course: "Arabic",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
     id: 5,
-    name: "Khadija Rahman",
+    name: "Mariam Yusuf",
     location: "New York, USA",
     rating: 5,
-    text: "I cannot thank this academy enough. My children look forward to their Quran classes every day. The teachers are qualified, punctual, and genuinely invested in teaching. A blessing for our family.",
-    course: "Quran Nazira"
+    text: "From knowing nothing to reading Quran fluently in 6 months! The patience and dedication of the Ustadhs is remarkable. My children now love their Quran classes.",
+    course: "Tarjuma",
+    image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face&auto=format"
   }
 ];
 
@@ -316,7 +317,7 @@ export const faqs = [
   {
     id: 1,
     question: "How do online Quran classes work?",
-    answer: "Our online Quran classes are conducted one-on-one via video conferencing. You'll be assigned a qualified teacher who will work with you or your child at scheduled times. All you need is a computer, tablet, or smartphone with a stable internet connection. Classes are interactive, allowing students to recite, ask questions, and receive immediate feedback."
+    answer: "Our online Quran classes are conducted one-on-one via video conferencing(Zoom, Whatsapp, Teams, etc). You'll be assigned a qualified teacher who will work with you or your child at scheduled times. All you need is a computer, tablet, or smartphone with a stable internet connection. Classes are interactive, allowing students to recite, ask questions, and receive immediate feedback."
   },
   {
     id: 2,
@@ -356,7 +357,7 @@ export const faqs = [
   {
     id: 9,
     question: "Is there a free trial?",
-    answer: "Yes! We offer a completely free trial class so you can experience our teaching quality firsthand. During the trial, you'll meet a teacher, understand our methodology, and see if our approach suits your learning style. There's no obligation—we want you to make an informed decision. Book your free trial today!"
+    answer: "Yes! We offer a completely free trial class for 3 days so you can experience our teaching quality firsthand. During the trial, you'll meet a teacher, understand our methodology, and see if our approach suits your learning style. There's no obligation—we want you to make an informed decision. Book your free trial today!"
   },
   {
     id: 10,
@@ -371,7 +372,7 @@ export const faqs = [
   {
     id: 12,
     question: "Is online learning as effective as in-person classes?",
-    answer: "Yes! Many students actually progress faster with online learning due to the one-on-one attention, flexible scheduling, and comfortable learning environment. Our teachers use proven digital tools and interactive methods to ensure engagement and effectiveness. Thousands of students worldwide have successfully learned and memorized the Quran through our online platform."
+    answer: "Yes! Many students actually progress faster with online learning due to the one-on-one attention, flexible scheduling, and comfortable learning environment. Our teachers use proven digital tools and interactive methods to ensure engagement and effectiveness. Hundreds of students worldwide have successfully learned and memorized the Quran through our online platform."
   }
 ];
 
@@ -426,95 +427,217 @@ export const services = [
   }
 ];
 
+export const homeData = {
+  hero: {
+    title: "Learn Quran Online with",
+    subtitle: "Qualified Teachers",
+    description: "One-on-one live Quran classes for kids and adults. Expert teachers, flexible schedules, and personalized learning from the comfort of your home."
+  },
+  stats: [
+    { icon: "Users", label: 'Active Students', value: '50+' },
+    { icon: "Globe", label: 'Countries Served', value: '10+' },
+    { icon: "Award", label: 'Qualified Teachers', value: '10+' },
+    { icon: "Clock", label: 'Classes Completed', value: '100+' },
+  ],
+  whyChooseUs: [
+    {
+      title: 'Qualified Teachers',
+      description: 'All our teachers are Hafiz/Hafiza with Ijazah and years of teaching experience.',
+    },
+    {
+      title: 'One-on-One Classes',
+      description: 'Personalized attention ensures every student progresses at their optimal pace.',
+    },
+    {
+      title: 'Flexible Scheduling',
+      description: 'Choose class times that fit your family routine. Available 7 days a week.',
+    },
+    {
+      title: 'Affordable Pricing',
+      description: 'Quality Quran education accessible to everyone with family discounts available.',
+    },
+    {
+      title: 'Safe Learning',
+      description: 'Learn from the comfort of home with full parental supervision and monitoring.',
+    },
+    {
+      title: 'Bilingual Support',
+      description: 'Instruction available in English and Urdu for better understanding.',
+    },
+  ]
+};
+
+export const aboutData = {
+  hero: {
+    title: "About Quran Academy",
+    subtitle: "Connecting hearts to the Quran through quality education and dedicated teachers"
+  },
+  story: {
+    title: "Our Story",
+    content: [
+      "Quran Academy was founded with a simple yet profound mission: to make authentic, quality Quran education accessible to Muslim families worldwide. We recognized that many families struggle to find qualified Quran teachers in their local communities, and even when available, scheduling conflicts and commutes create barriers to consistent learning.",
+      "Our founders, themselves parents who faced these challenges, envisioned a platform that would connect students with expert Quran teachers regardless of geographical boundaries. What began as a small initiative has grown into a thriving global community of learners and educators, united by their love for the Quran.",
+      "Today, we serve hundreds of students across more than 50 countries. From young children taking their first steps in reading Arabic letters to adults memorizing the entire Quran, we've had the honor of accompanying students on every stage of their Quranic journey. Our success is measured not in numbers, but in the transformed lives and strengthened faith of our students."
+    ]
+  },
+  founder: {
+    title: "Meet Our Founder",
+    subtitle: "The visionary behind Quran Academy's mission",
+    name: "Hafiz Arham",
+    role: "Founder & CEO",
+    organization: "Quran Academy",
+    image: "/images/founder-photo.jpg",
+    sections: [
+      {
+        title: "Who I Am",
+        content: "I am Hafiz Arham, a passionate educator and multidimensional professional dedicated to bridging traditional Islamic knowledge with modern technology. As a Hafiz-ul-Quran with advanced expertise in software development, UI/UX design, and AI, I bring a unique blend of spiritual wisdom and technical innovation to Quran education."
+      },
+      {
+        title: "What I Do",
+        content: "As the founder of Quran Academy, I combine my deep understanding of Quranic teachings with cutting-edge technology to create exceptional learning experiences. I personally oversee curriculum development, teacher training, and technological innovation, ensuring every aspect of our platform meets the highest standards of both educational excellence and technical sophistication."
+      },
+      {
+        title: "My Aim for Quran Academy",
+        content: "My vision is to revolutionize Quran education by making it accessible, engaging, and effective for Muslims worldwide. I aim to build Quran Academy into the most trusted online learning platform, where technology and tradition unite to nurture a generation that not only recites the Quran beautifully but lives by its timeless wisdom and guidance."
+      }
+    ],
+    quote: "My goal is to create a world where every Muslim can connect deeply with the Quran through innovative, technology-enhanced learning that preserves authenticity while embracing modern educational excellence."
+  },
+  missionVision: {
+    mission: {
+      title: "Our Mission",
+      content: "To provide world-class Quran education that is accessible, affordable, and effective. We aim to empower every Muslim—regardless of age, location, or background—to connect with the Quran through authentic teaching, modern technology, and compassionate guidance. Our mission is to nurture a generation that not only recites the Quran beautifully but understands and lives by its teachings."
+    },
+    vision: {
+      title: "Our Vision",
+      content: "We envision a world where every Muslim has the opportunity to learn the Quran with qualified teachers. A world where distance, time, and resources are no longer barriers to Quranic education. We aspire to be the most trusted name in online Quran learning—known for our teaching excellence, student care, and commitment to preserving the authentic recitation and understanding of Allah's words."
+    }
+  },
+  values: [
+    {
+      icon: "Heart",
+      title: 'Faith & Excellence',
+      description: 'We combine Islamic values with educational excellence to nurture spiritually grounded students.',
+    },
+    {
+      icon: "Users",
+      title: 'Student-Centered',
+      description: 'Every student is unique. We tailor our teaching to individual learning styles and pace.',
+    },
+    {
+      icon: "Award",
+      title: 'Quality Assurance',
+      description: 'Our teachers undergo rigorous screening and continuous training to maintain the highest standards.',
+    },
+    {
+      icon: "Target",
+      title: 'Clear Goals',
+      description: 'We set measurable objectives and track progress to ensure consistent advancement.',
+    }
+  ],
+  differences: [
+    {
+      title: "Carefully Vetted Teachers",
+      description: "We don't just hire anyone who can recite the Quran. Our teachers are Hafiz/Hafiza with formal Ijazah, possess teaching certifications, and undergo background checks. More importantly, they have the patience, compassion, and dedication that makes learning enjoyable."
+    },
+    {
+      title: "Personalized Learning Approach",
+      description: "No two students are alike. We assess each student's current level, learning style, and goals, then create a customized learning plan. Whether you're five or fifty, a complete beginner or looking to perfect Tajweed, we meet you where you are."
+    },
+    {
+      title: "Family-Centered Philosophy",
+      description: "We view parents as partners in education. We provide regular progress reports, encourage parental involvement, and offer guidance on how families can reinforce learning at home. Your child's success is a team effort."
+    },
+    {
+      title: "Proven Track Record",
+      description: "Our students consistently achieve their goals—whether that's learning to read Quran fluently, completing memorization, or mastering Tajweed. Thousands of satisfied families across the globe trust us with their Quranic education."
+    }
+  ]
+};
+
 export const courses = [
   {
     id: 1,
     title: "Kids Quran Course",
     subtitle: "Ages 5-12",
-    description: "Specially designed engaging curriculum for young learners. We make Quran learning fun and effective through interactive methods that keep children motivated and excited to learn.",
+    description: "Fun, interactive learning that makes Quran exciting for children! Watch your child fall in love with Allah's words.",
     includes: [
       "Noorani Qaida foundation",
       "Quran reading with Tajweed",
       "Memorization of short Surahs",
-      "Daily duas and Islamic stories",
-      "Interactive learning activities"
+      "Daily duas and Islamic stories"
     ],
-    duration: "30 minutes per class",
-    level: "Beginner to Intermediate"
+    duration: "30 min",
+    level: "Beginner"
   },
   {
     id: 2,
     title: "Teen Quran Program",
     subtitle: "Ages 13-17",
-    description: "Comprehensive Quran education tailored for teenagers. Focus on building strong recitation skills, understanding Quranic meanings, and developing a personal connection with the Quran.",
+    description: "Build confidence and connection with Quran. Perfect for teens seeking deeper understanding and beautiful recitation.",
     includes: [
       "Advanced Tajweed rules",
-      "Quran recitation with fluency",
-      "Tafseer (basic interpretation)",
-      "Memorization techniques",
-      "Islamic values and character"
+      "Fluent Quran recitation",
+      "Basic Tafseer understanding",
+      "Character development"
     ],
-    duration: "45 minutes per class",
-    level: "Intermediate to Advanced"
+    duration: "30 min",
+    level: "Intermediate"
   },
   {
     id: 3,
     title: "Adult Quran Learning",
     subtitle: "Ages 18+",
-    description: "Never too late to start! Our adult program offers a comfortable, pressure-free environment for learning Quran. Whether you're a complete beginner or looking to improve, we support your journey.",
+    description: "It's never too late! Start your Quran journey with personalized guidance at your own pace.",
     includes: [
-      "Start from basics or current level",
-      "Tajweed and proper pronunciation",
-      "Understanding meanings",
-      "Flexible pace and schedule",
-      "Personalized learning plan"
+      "Learn from your level",
+      "Perfect Tajweed pronunciation",
+      "Understand Quran meanings",
+      "Flexible scheduling"
     ],
-    duration: "45-60 minutes per class",
+    duration: "30 min",
     level: "All Levels"
   },
   {
     id: 4,
     title: "Hifz Program",
     subtitle: "All Ages",
-    description: "Intensive Quran memorization program with structured methodology. Our experienced teachers guide students through the beautiful journey of becoming Hafiz/Hafiza with proven techniques.",
+    description: "Become a Hafiz/Hafiza with our proven memorization system. Join the blessed journey of preserving Allah's words.",
     includes: [
-      "Systematic memorization plan",
-      "Daily revision strategies",
-      "One-on-one attention",
-      "Progress monitoring",
-      "Completion ceremony"
+      "Step-by-step memorization",
+      "Daily revision techniques",
+      "Personal mentorship",
+      "Completion celebration"
     ],
-    duration: "60 minutes per class",
-    level: "Dedicated Learners"
+    duration: "60 min",
+    level: "Dedicated"
   },
   {
     id: 5,
     title: "Tajweed Mastery",
     subtitle: "All Ages",
-    description: "Perfect your Quran recitation with in-depth Tajweed training. Learn the science of beautiful recitation and develop the voice of a Qari. Ideal for those who can read but want to recite beautifully.",
+    description: "Recite Quran beautifully like a Qari! Master the art of perfect pronunciation and mesmerizing recitation.",
     includes: [
-      "Complete Tajweed rules",
-      "Makharij and Sifaat mastery",
-      "Recitation practice",
-      "Listening and correction",
-      "Certification upon completion"
+      "Complete Tajweed science",
+      "Voice training techniques",
+      "Professional recitation practice",
+      "Certification available"
     ],
-    duration: "45 minutes per class",
-    level: "Intermediate to Advanced"
+    duration: "30 min",
+    level: "Advanced"
   },
   {
     id: 6,
     title: "Quran with Translation",
     subtitle: "Ages 15+",
-    description: "Read and understand the Quran's message. This course combines proper recitation with English translation and basic Tafseer, helping you connect deeply with Allah's words.",
+    description: "Understand every word you recite! Connect deeply with Allah's message through translation and reflection.",
     includes: [
-      "Recitation with Tajweed",
+      "Recitation with meaning",
       "English translation study",
-      "Basic Tafseer explanation",
-      "Reflection and discussion",
-      "Practical application"
+      "Practical life lessons",
+      "Heart-to-heart connection"
     ],
-    duration: "60 minutes per class",
+    duration: "30 min",
     level: "Intermediate"
   }
 ];
