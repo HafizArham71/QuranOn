@@ -161,73 +161,78 @@ const Home = () => {
 
 
       {/* Services Preview */}
-
-      <section className="py-20 bg-gray-50">
-
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-          <div className="text-center mb-12">
-
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Our Services</h2>
-
-            <p className="mt-4 text-lg text-gray-600">
-
-              Comprehensive Quran education tailored to your needs
-
-            </p>
-
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-            {services.map((service) => {
-
-              const IconComponent = iconMap[service.icon];
-
-              return (
-
-                <Card key={service.id} className="border-none shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-
-                  <CardContent className="p-6">
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-teal-600 mb-4">
-
-                      <IconComponent className="h-6 w-6 text-white" />
-
-                    </div>
-
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
-
-                    <p className="text-sm text-gray-600">{service.description}</p>
-
-                  </CardContent>
-
-                </Card>
-
-              );
-
-            })}
-
-          </div>
-
-          <div className="text-center mt-10">
-
-            <Link to="/services">
-
-              <Button variant="outline" className="border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-semibold">
-
-                View All Services
-
-                <ArrowRight className="ml-2 h-4 w-4" />
-
-              </Button>
-
-            </Link>
-
-          </div>
-
+      <section className="py-24 bg-gradient-to-br from-teal-50 via-cyan-50 to-emerald-50 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 right-20 w-40 h-40 bg-teal-600 rounded-full"></div>
+          <div className="absolute bottom-20 left-20 w-32 h-32 bg-cyan-600 rounded-full"></div>
+          <div className="absolute top-1/2 right-1/3 w-24 h-24 bg-emerald-600 rounded-full"></div>
         </div>
 
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Our <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Services</span>
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive Quran education tailored to your spiritual journey
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => {
+              const IconComponent = iconMap[service.icon];
+              
+              return (
+                <div key={service.id} className="group relative">
+                  {/* Glow effect on hover */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-teal-600 to-cyan-600 rounded-2xl opacity-0 group-hover:opacity-20 transition-all duration-500 blur"></div>
+                  
+                  <Card className="relative border-none shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white rounded-2xl overflow-hidden">
+                    {/* Gradient top border */}
+                    <div className={`h-2 bg-gradient-to-r ${
+                      index === 0 ? 'from-teal-500 to-cyan-600' :
+                      index === 1 ? 'from-cyan-500 to-teal-600' :
+                      index === 2 ? 'from-emerald-500 to-teal-600' :
+                      'from-teal-500 to-emerald-600'
+                    }`}></div>
+                    
+                    <CardContent className="p-8">
+                      {/* Enhanced icon container */}
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-teal-600 mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <IconComponent className="h-8 w-8 text-white" />
+                      </div>
+
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-teal-700 transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                      
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        {service.description}
+                      </p>
+
+                      {/* Learn more link */}
+                      <Link to={`/services#${service.id}`} className="flex items-center text-teal-600 font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer">
+                        <span>Learn more</span>
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                      </Link>
+                    </CardContent>
+                  </Card>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-16">
+            <Link to="/services">
+              <Button size="lg" className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 px-8 py-4">
+                Explore All Services
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
 
 

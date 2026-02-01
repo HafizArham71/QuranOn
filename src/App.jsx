@@ -7,6 +7,8 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import QuranOnChatbot from "./components/QuranOnChatbot";
 import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
+import ElegantLoader from "./components/ElegantLoader";
+import { useElegantLoader } from "./hooks/useElegantLoader";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -17,8 +19,16 @@ import Testimonials from "./pages/Testimonials";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import BookTrial from "./pages/BookTrial";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 function App() {
+  const isLoading = useElegantLoader(2500);
+
+  if (isLoading) {
+    return <ElegantLoader />;
+  }
+
   return (
     <div className="App">
       <BrowserRouter basename="/">
@@ -35,6 +45,8 @@ function App() {
           <Route path="/faqs" element={<FAQ />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/book-trial" element={<BookTrial />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
         <Footer />
         {/* WhatsApp Button - Update phoneNumber with your WhatsApp number (include country code, e.g., "15551234567" or "+15551234567") */}
