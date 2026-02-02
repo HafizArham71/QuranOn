@@ -523,7 +523,7 @@ const About = () => {
           </p>
           <div className="mt-8">
             <Link to="/book-trial">
-              <Button size="lg" className="bg-white text-teal-600 hover:bg-gray-100 font-semibold text-lg px-10 py-6 shadow-xl transition-all duration-300">
+              <Button size="xl" variant="outlineLight">
                 Start Your Free Trial Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

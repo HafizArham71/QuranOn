@@ -116,7 +116,6 @@ const TermsOfService = () => {
         </div>
 
         {/* Contact Information */}
-        {/* Contact Information */}
         <div className="bg-gradient-to-r from-cyan-600 to-teal-600 rounded-2xl shadow-xl p-8 text-white">
           <h2 className="text-2xl font-bold mb-6">{contact.title}</h2>
           <p className="text-white/90 mb-6">
@@ -144,45 +143,6 @@ const TermsOfService = () => {
           </div>
         </div>
 
-        {/* Limitation of Liability */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Limitation of Liability</h2>
-          
-          <div className="bg-gray-50 rounded-xl p-6">
-            <p className="text-gray-600 leading-relaxed mb-4">
-              To the fullest extent permitted by law, QuranOn shall not be liable for any indirect, incidental, 
-              special, consequential, or punitive damages, including without limitation, loss of profits, data, 
-              use, goodwill, or other intangible losses, resulting from your use of the services.
-            </p>
-            <p className="text-gray-600 leading-relaxed">
-              Our total liability for any claims arising out of or relating to these terms or the services 
-              shall not exceed the amount you paid us in the twelve (12) months preceding the claim.
-            </p>
-          </div>
-        </div>
-
-        {/* Termination */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Termination</h2>
-          
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-orange-50 rounded-xl p-6">
-              <h3 className="font-semibold text-gray-900 mb-3">By You</h3>
-              <p className="text-gray-600 text-sm">
-                You may terminate your account at any time through your account settings or by contacting 
-                our support team. You'll continue to have access until the end of your current billing period.
-              </p>
-            </div>
-
-            <div className="bg-red-50 rounded-xl p-6">
-              <h3 className="font-semibold text-gray-900 mb-3">By Us</h3>
-              <p className="text-gray-600 text-sm">
-                We may terminate or suspend your account immediately for violation of these terms, 
-                fraudulent activity, or any reason that threatens our platform integrity.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

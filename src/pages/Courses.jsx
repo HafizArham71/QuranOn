@@ -102,13 +102,15 @@ const Courses = () => {
                     </div>
                     
                     {/* CTA Button */}
-                    <button 
+                    <Button 
                       onClick={() => handleStartLearning(course)}
-                      className="w-full bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm"
+                      size="default"
+                      variant="primary"
+                      className="w-full"
                     >
                       <span>Start Learning</span>
                       <ArrowRight className="h-4 w-4" />
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -315,19 +317,15 @@ const Courses = () => {
                   {/* Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link to="/contact">
-                      <button className="group bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                        <span className="flex items-center">
-                          <span>Get Personalized Recommendations</span>
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                        </span>
-                      </button>
+                      <Button size="lg" variant="primary">
+                        Get Personalized Recommendations
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
                     </Link>
                     <Link to="/book-trial">
-                      <button className="group bg-white text-teal-600 hover:bg-teal-50 font-semibold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-2 border-teal-400">
-                        <span className="flex items-center">
-                          <span>Try Free Assessment Class</span>
-                        </span>
-                      </button>
+                      <Button size="lg" variant="outline">
+                        Try Free Assessment Class
+                      </Button>
                     </Link>
                   </div>
                   
@@ -450,19 +448,15 @@ const Courses = () => {
               {/* Enhanced CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/book-trial">
-                  <button className="group bg-gradient-to-r from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5">
-                    <span className="flex items-center">
-                      <span>Start Free Trial Now</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
-                  </button>
+                  <Button size="lg" variant="primary">
+                    Start Free Trial Now
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </Link>
                 <Link to="/contact">
-                  <button className="group bg-white text-teal-600 hover:bg-teal-50 font-semibold px-8 py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-2 border-teal-400">
-                    <span className="flex items-center">
-                      <span>Discuss Family Plans</span>
-                    </span>
-                  </button>
+                  <Button size="lg" variant="outline">
+                    Discuss Family Plans
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -481,7 +475,7 @@ const Courses = () => {
           </p>
           <div className="mt-8">
             <Link to="/book-trial">
-              <Button size="lg" className="bg-white text-teal-600 hover:bg-gray-100 font-semibold text-lg px-10 py-6 shadow-xl transition-all duration-300">
+              <Button size="xl" variant="outlineLight">
                 Book Your Free Trial Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

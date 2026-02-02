@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, MessageCircle, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -283,12 +284,9 @@ const Contact = () => {
                   • We're committed to helping you learn Quran
                 </p>
               </div>
-              <button
-                onClick={() => setShowSuccessModal(false)}
-                className="mt-6 px-6 py-2 bg-gradient-to-r from-cyan-500 to-teal-600 text-white font-semibold rounded-lg hover:from-cyan-600 hover:to-teal-700 transition-all duration-300"
-              >
+              <Button size="default" variant="primary" onClick={() => setShowSuccessModal(false)}>
                 Close
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -529,8 +527,9 @@ const Contact = () => {
                     <Button
                       type="submit"
                       size="lg"
+                      variant="primary"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-semibold py-6 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full"
                     >
                       {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>
@@ -549,9 +548,11 @@ const Contact = () => {
           <p className="text-gray-700 mb-6">
             Experience our teaching quality firsthand with a free trial class. No credit card required.
           </p>
-          <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-semibold px-8 py-6">
-            <a href="/book-trial">Book Your Free Trial</a>
-          </Button>
+          <Link to="/book-trial">
+            <Button size="lg" variant="primary">
+              Book Your Free Trial
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

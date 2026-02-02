@@ -226,13 +226,13 @@ const Services = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/book-trial">
-                    <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                    <Button size="lg" variant="primary">
                       Start Free Trial
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                   <Link to="/courses">
-                    <Button size="lg" variant="outline" className="border-2 border-teal-600 text-teal-600 hover:bg-teal-50 font-semibold transition-all duration-300">
+                    <Button size="lg" variant="outline">
                       Learn More
                     </Button>
                   </Link>
@@ -301,13 +301,13 @@ const Services = () => {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/book-trial">
-              <Button size="lg" className="bg-white text-teal-600 hover:bg-gray-100 font-semibold text-lg px-10 py-6 shadow-xl transition-all duration-300">
+              <Button size="xl" variant="outlineLight">
                 Book Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 font-semibold text-lg px-10 py-6 transition-all duration-300">
+              <Button size="xl" variant="outlineLight">
                 Contact Us for Pricing
               </Button>
             </Link>

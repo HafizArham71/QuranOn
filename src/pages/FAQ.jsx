@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ChevronDown, ChevronUp, MessageCircle, Mail, Phone, Star, Users, BookOpen, HelpCircle, ThumbsUp, ThumbsDown, User, Settings, Headphones, ExternalLink, ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, MessageCircle, Mail, Phone, Star, Users, BookOpen, HelpCircle, ThumbsUp, ThumbsDown, User, Settings, Headphones, ExternalLink, ArrowRight, CheckCircle, AlertCircle, Clock, Globe } from 'lucide-react';
 import { faqs } from '../mock';
 
 const FAQ = () => {
@@ -103,13 +103,14 @@ const FAQ = () => {
   }, [searchTerm, selectedCategory]);
 
   const toggleExpanded = (id) => {
-    const newExpanded = new Set(expandedItems);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
+    // Auto-hide logic: only one FAQ can be expanded at a time
+    if (expandedItems.has(id)) {
+      // If clicking the already expanded item, collapse it
+      setExpandedItems(new Set());
     } else {
-      newExpanded.add(id);
+      // If clicking a different item, collapse all others and expand this one
+      setExpandedItems(new Set([id]));
     }
-    setExpandedItems(newExpanded);
   };
 
   const handleRating = (faqId, rating) => {
@@ -133,7 +134,7 @@ const FAQ = () => {
       </section>
 
       {/* Sticky Search Bar */}
-      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <div className="sticky top-0 z-40 bg-white border-b border-gray-200 shadow-md">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -161,7 +162,7 @@ const FAQ = () => {
                   onClick={() => setSelectedCategory(category.id)}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                     isActive 
-                      ? 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white shadow-lg' 
+                      ? 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white shadow-md' 
                       : 'bg-white/70 text-gray-700 hover:bg-white/90 border border-gray-200'
                   }`}
                 >
@@ -185,76 +186,94 @@ const FAQ = () => {
             return (
               <div 
                 key={faq.id} 
-                className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                className="group"
                 style={{
                   animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`
                 }}
               >
-                <button
-                  onClick={() => toggleExpanded(faq.id)}
-                  className="w-full px-6 py-5 text-left hover:bg-white/90 transition-all duration-300 focus:outline-none group"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3 flex-1 pr-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-teal-500 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <HelpCircle className="w-5 h-5 text-white" />
-                      </div>
-                      <h3 className="font-semibold text-gray-900 text-lg leading-tight">{faq.question}</h3>
-                    </div>
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      isExpanded 
-                        ? 'bg-cyan-100 text-cyan-600 rotate-180' 
-                        : 'bg-gray-100 text-gray-500 group-hover:bg-cyan-50 group-hover:text-cyan-600'
-                    }`}>
-                      <ChevronDown className="w-5 h-5" />
-                    </div>
-                  </div>
-                </button>
-                
-                <div 
-                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                    isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className="px-6 pb-5 border-t border-white/20">
-                    <div className="pt-5">
-                      <div className="bg-gradient-to-r from-cyan-50 to-teal-50 rounded-lg p-4 border border-cyan-100">
-                        <p className="text-gray-700 leading-relaxed text-base">{faq.answer}</p>
-                      </div>
-                      
-                      <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
-                          <span className="flex items-center space-x-1">
-                            <Users className="w-4 h-4" />
-                            <span>Popular Question</span>
-                          </span>
+                {/* Simplified Card */}
+                <div className={`bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden border ${
+                  isExpanded 
+                    ? 'border-teal-200' 
+                    : 'border-gray-100'
+                }`}>
+                  {/* Question Button */}
+                  <button
+                    onClick={() => toggleExpanded(faq.id)}
+                    className="w-full px-6 py-4 text-left focus:outline-none"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3 flex-1 pr-4">
+                        {/* Simplified Icon */}
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 ${
+                          isExpanded 
+                            ? 'bg-teal-500 text-white' 
+                            : 'bg-gray-100 text-gray-600 group-hover:bg-teal-100 group-hover:text-teal-600'
+                        }`}>
+                          <HelpCircle className="w-4 h-4" />
                         </div>
                         
-                        <div className="flex items-center space-x-3">
-                          <span className="text-sm text-gray-500">Was this helpful?</span>
-                          <div className="flex items-center space-x-1">
-                            <button 
-                              onClick={() => handleRating(faq.id, 'helpful')}
-                              className={`p-2 rounded-lg transition-all duration-200 ${
-                                userRatings[faq.id] === 'helpful'
-                                  ? 'bg-green-100 text-green-600'
-                                  : 'hover:bg-green-100 hover:text-green-600'
-                              }`}
-                              title="Helpful"
-                            >
-                              <ThumbsUp className="w-4 h-4" />
-                            </button>
-                            <button 
-                              onClick={() => handleRating(faq.id, 'not-helpful')}
-                              className={`p-2 rounded-lg transition-all duration-200 ${
-                                userRatings[faq.id] === 'not-helpful'
-                                  ? 'bg-red-100 text-red-600'
-                                  : 'hover:bg-red-100 hover:text-red-600'
-                              }`}
-                              title="Not helpful"
-                            >
-                              <ThumbsDown className="w-4 h-4" />
-                            </button>
+                        {/* Question text */}
+                        <h3 className={`font-semibold text-gray-900 transition-colors duration-200 ${
+                          isExpanded ? 'text-teal-700' : ''
+                        }`}>{faq.question}</h3>
+                      </div>
+                      
+                      {/* Simplified Chevron */}
+                      <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 ${
+                        isExpanded 
+                          ? 'bg-teal-100 text-teal-600 rotate-180' 
+                          : 'bg-gray-100 text-gray-400 group-hover:bg-teal-50 group-hover:text-teal-600'
+                      }`}>
+                        <ChevronDown className="w-4 h-4" />
+                      </div>
+                    </div>
+                  </button>
+                  
+                  {/* Simplified Answer Section */}
+                  <div 
+                    className={`transition-all duration-200 ease-in-out ${
+                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="px-6 pb-4">
+                      <div className="pt-4 border-t border-gray-100">
+                        {/* Clean answer display */}
+                        <p className="text-gray-700 leading-relaxed">{faq.answer}</p>
+                        
+                        {/* Simplified feedback */}
+                        <div className="flex items-center justify-between mt-4 pt-3 border-t border-gray-50">
+                          <div className="flex items-center space-x-2 text-sm text-gray-500">
+                            <Users className="w-3 h-3" />
+                            <span>Popular</span>
+                          </div>
+                          
+                          <div className="flex items-center space-x-2">
+                            <span className="text-xs text-gray-500">Helpful?</span>
+                            <div className="flex items-center space-x-1">
+                              <button 
+                                onClick={() => handleRating(faq.id, 'helpful')}
+                                className={`p-1.5 rounded transition-all duration-200 ${
+                                  userRatings[faq.id] === 'helpful'
+                                    ? 'bg-green-500 text-white' 
+                                    : 'hover:bg-green-100 hover:text-green-600'
+                                }`}
+                                title="Helpful"
+                              >
+                                <ThumbsUp className="w-3 h-3" />
+                              </button>
+                              <button 
+                                onClick={() => handleRating(faq.id, 'not-helpful')}
+                                className={`p-1.5 rounded transition-all duration-200 ${
+                                  userRatings[faq.id] === 'not-helpful'
+                                    ? 'bg-red-500 text-white' 
+                                    : 'hover:bg-red-100 hover:text-red-600'
+                                }`}
+                                title="Not helpful"
+                              >
+                                <ThumbsDown className="w-3 h-3" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -279,7 +298,7 @@ const FAQ = () => {
                 setSearchTerm('');
                 setSelectedCategory('all');
               }}
-              className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-teal-600 text-white rounded-lg hover:from-cyan-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-teal-600 text-white rounded-lg hover:from-cyan-700 hover:to-teal-700 transition-all duration-300 transform hover:scale-105 shadow-md"
             >
               Clear search & filters
             </button>
@@ -301,45 +320,180 @@ const FAQ = () => {
         }
       `}</style>
 
-      {/* Contact Support */}
-      <div className="bg-gradient-to-r from-cyan-600 to-teal-600 py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Still Need Help?</h2>
-          <p className="text-white/90 mb-8">Our support team is here to help you 24/7</p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <button 
-              onClick={() => window.open('https://wa.me/923134350157', '_blank')}
-              className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 hover:bg-white/30 transition-all duration-300 text-left"
-            >
-              <MessageCircle className="w-8 h-8 text-white mb-3" />
-              <h3 className="font-semibold text-white mb-2">Live Chat</h3>
-              <p className="text-white/80 text-sm mb-4">Chat with our support team</p>
-              <span className="text-white font-medium">Start Chat →</span>
-            </button>
+      {/* Enhanced Contact Support Section */}
+      <section className="py-20 bg-gradient-to-br from-slate-50 via-teal-50 to-cyan-50 relative overflow-hidden">
+        {/* Background Decorations */}
+        <div className="absolute top-10 left-10 w-32 h-32 bg-teal-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-20 w-48 h-48 bg-cyan-400/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 left-1/3 w-40 h-40 bg-teal-400/10 rounded-full blur-3xl"></div>
+        
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-teal-100 border border-teal-200 mb-6">
+              <span className="w-2 h-2 bg-teal-500 rounded-full mr-2 animate-pulse"></span>
+              <span className="text-teal-700 text-sm font-medium">24/7 Support Available</span>
+            </div>
             
-            <button 
-              onClick={() => window.open('mailto:quranon2@gmail.com', '_blank')}
-              className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 hover:bg-white/30 transition-all duration-300 text-left"
-            >
-              <Mail className="w-8 h-8 text-white mb-3" />
-              <h3 className="font-semibold text-white mb-2">Email Support</h3>
-              <p className="text-white/80 text-sm mb-4">Get detailed responses</p>
-              <span className="text-white font-medium">Send Email →</span>
-            </button>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Still Need <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">Help?</span>
+            </h2>
             
-            <button 
-              onClick={() => window.open('https://wa.me/923134350157?call=1', '_blank')}
-              className="bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg p-6 hover:bg-white/30 transition-all duration-300 text-left"
-            >
-              <Phone className="w-8 h-8 text-white mb-3" />
-              <h3 className="font-semibold text-white mb-2">Phone Support</h3>
-              <p className="text-white/80 text-sm mb-4">Speak with our team</p>
-              <span className="text-white font-medium">Call Now →</span>
-            </button>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Our dedicated support team is here to assist you with any questions about Quran learning, courses, or technical issues.
+            </p>
+          </div>
+
+          {/* Contact Options Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {/* Live Chat Option */}
+            <div className="group relative">
+              <div className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-500 overflow-hidden border border-gray-100">
+                {/* Icon Container */}
+                <div className="relative p-8 pb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <MessageCircle className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Live Chat</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Get instant help from our support team through real-time chat. Average response time: 2 minutes.
+                  </p>
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                      <span>Online Now</span>
+                    </div>
+                    <span className="text-sm text-gray-500">24/7 Available</span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => window.open('https://wa.me/923134350157', '_blank')}
+                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-teal-600 hover:to-cyan-700 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-md"
+                  >
+                    <span>Start Live Chat</span>
+                    <MessageCircle className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Email Support Option */}
+            <div className="group relative">
+              <div className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-500 overflow-hidden border border-gray-100">
+                {/* Icon Container */}
+                <div className="relative p-8 pb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <Mail className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Email Support</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Send us detailed questions and receive comprehensive responses within 24 hours.
+                  </p>
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                      <Clock className="w-4 h-4" />
+                      <span>Response Time</span>
+                    </div>
+                    <span className="text-sm text-gray-500">Within 24 hours</span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => window.open('mailto:quranon2@gmail.com', '_blank')}
+                    className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-md"
+                  >
+                    <span>Send Email</span>
+                    <Mail className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Phone Support Option */}
+            <div className="group relative">
+              <div className="relative bg-white rounded-2xl shadow-md hover:shadow-lg transition-all duration-500 overflow-hidden border border-gray-100">
+                {/* Icon Container */}
+                <div className="relative p-8 pb-6">
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                    <Phone className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Phone Support</h3>
+                  <p className="text-gray-600 mb-6 leading-relaxed">
+                    Speak directly with our support team for immediate assistance and personalized guidance.
+                  </p>
+                  
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                      <Clock className="w-4 h-4" />
+                      <span>Available</span>
+                    </div>
+                    <span className="text-sm text-gray-500">9AM-6PM EST</span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => window.open('tel:+923134350157', '_blank')}
+                    className="w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-md"
+                  >
+                    <span>Call Now</span>
+                    <Phone className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Additional Support Info */}
+          <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Other Ways to Reach Us</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                      <Globe className="w-5 h-5 text-teal-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">Website Contact Form</p>
+                      <p className="text-sm text-gray-600">Fill out our detailed contact form</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900">Social Media</p>
+                      <p className="text-sm text-gray-600">Connect with us on social platforms</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">Support Hours</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Monday - Friday</span>
+                    <span className="font-medium text-gray-900">9:00 AM - 6:00 PM EST</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2 border-b border-gray-100">
+                    <span className="text-gray-600">Saturday</span>
+                    <span className="font-medium text-gray-900">10:00 AM - 4:00 PM EST</span>
+                  </div>
+                  <div className="flex justify-between items-center py-2">
+                    <span className="text-gray-600">Sunday</span>
+                    <span className="font-medium text-gray-900">Emergency Support Only</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Add custom styles */}
       <style jsx>{`

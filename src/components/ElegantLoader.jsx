@@ -80,31 +80,6 @@ const ElegantLoader = () => {
         <div className="absolute top-32 right-24 w-1 h-1 bg-teal-400 rounded-full animate-ping delay-75"></div>
         <div className="absolute bottom-24 left-32 w-1 h-1 bg-teal-300 rounded-full animate-ping delay-150"></div>
       </div>
-
-      <style jsx>{`
-        @keyframes ping {
-          0% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          75%, 100% {
-            transform: scale(2);
-            opacity: 0;
-          }
-        }
-        
-        .animate-ping {
-          animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-        
-        .delay-75 {
-          animation-delay: 75ms;
-        }
-        
-        .delay-150 {
-          animation-delay: 150ms;
-        }
-      `}</style>
     </div>
   );
 };

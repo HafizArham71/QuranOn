@@ -275,12 +275,20 @@ What aspect of Quran learning interests you most - understanding the meaning, pr
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
+          className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 group relative border-2 border-white/20"
+          style={{
+            background: 'linear-gradient(135deg, #0d9488 0%, #06b6d4 100%)'
+          }}
+          aria-label="Open chat support"
         >
-          <Headset className="h-6 w-6" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+          <Headset className="h-6 w-6 drop-shadow-sm" />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center animate-pulse border-2 border-white shadow-md">
             1
           </span>
+          {/* Hover overlay for better contrast */}
+          <div className="absolute inset-0 rounded-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+          {/* Focus ring for accessibility */}
+          <div className="absolute inset-0 rounded-full ring-2 ring-transparent group-hover:ring-white/30 transition-all duration-300 pointer-events-none"></div>
         </button>
       )}
 

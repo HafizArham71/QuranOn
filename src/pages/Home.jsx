@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { ArrowRight, CheckCircle, Users, Globe, Award, Clock, BookOpen, Brain, Mic2, Heart, Star, ChevronDown } from 'lucide-react';
+import { ArrowRight, CheckCircle, Users, Globe, Award, Clock, BookOpen, Brain, Mic2, Heart, Star, ChevronDown, Shield } from 'lucide-react';
 
 import { Button } from '../components/ui/button';
 
@@ -102,14 +102,14 @@ const Home = () => {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
               <Link to="/book-trial">
-                <Button size="lg" className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 px-12 py-6 text-lg">
+                <Button size="xl" variant="default">
                   Start Free Trial
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
               </Link>
               
               <Link to="/courses">
-                <Button size="lg" variant="outline" className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 font-semibold transition-all duration-300 px-12 py-6 text-lg">
+                <Button size="xl" variant="outline">
                   View Courses
                 </Button>
               </Link>
@@ -160,9 +160,9 @@ const Home = () => {
           </div>
         </div>
         
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 w-full">
-          <svg className="w-full h-24 text-white" viewBox="0 0 1440 120" fill="currentColor">
+        {/* Bottom Wave - Full Width */}
+        <div className="absolute bottom-0 left-0 right-0 w-screen overflow-hidden">
+          <svg className="w-full h-24 text-white" viewBox="0 0 1440 120" fill="currentColor" preserveAspectRatio="none">
             <path d="M0,64 C80,48 160,32 240,32 C320,32 400,48 480,64 C560,80 640,96 720,96 C800,96 880,80 960,64 C1040,48 1120,32 1200,32 C1280,32 1360,48 1440,64 L1440,120 L0,120 Z" />
           </svg>
         </div>
@@ -280,7 +280,7 @@ const Home = () => {
 
           <div className="text-center mt-16">
             <Link to="/services">
-              <Button size="lg" className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 px-8 py-4">
+              <Button size="lg" variant="primary">
                 Explore All Services
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -341,6 +341,143 @@ const Home = () => {
 
 
 
+      {/* Risk-Free Trial Section - Conversion Focused */}
+      <section className="py-20 bg-white relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="h-full w-full" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2314b8a6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            
+            {/* Left Content */}
+            <div>
+              <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 border border-emerald-200 mb-6">
+                <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
+                <span className="text-emerald-700 text-sm font-medium">Limited Time Offer</span>
+              </div>
+              
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">
+                Start Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Free Trial</span> Today
+              </h2>
+              
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                Join 10,000+ Muslim families who trust QuranOn for their children's Islamic education. 
+                No credit card required. Cancel anytime.
+              </p>
+
+              {/* Trust Badges */}
+              <div className="flex flex-wrap gap-4 mb-8">
+                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
+                  <Shield className="h-5 w-5 text-emerald-600" />
+                  <span className="text-sm font-medium text-gray-700">100% Secure</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
+                  <Clock className="h-5 w-5 text-emerald-600" />
+                  <span className="text-sm font-medium text-gray-700">Cancel Anytime</span>
+                </div>
+                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
+                  <Award className="h-5 w-5 text-emerald-600" />
+                  <span className="text-sm font-medium text-gray-700">Certified Teachers</span>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <Link to="/book-trial">
+                <Button size="lg" variant="default">
+                  Start Your 3-Day Free Trial
+                  <ArrowRight className="ml-3 h-6 w-6" />
+                </Button>
+              </Link>
+
+              <p className="text-sm text-gray-500 mt-4">
+                ✓ No hidden fees ✓ Instant access ✓ 24/7 support
+              </p>
+            </div>
+
+            {/* Right Content - Benefits Grid */}
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get:</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Personalized Learning Plan</h4>
+                    <p className="text-gray-600 text-sm">Custom curriculum based on your child's level and goals</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">One-on-One Sessions</h4>
+                    <p className="text-gray-600 text-sm">Individual attention from certified Quran teachers</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Progress Tracking</h4>
+                    <p className="text-gray-600 text-sm">Monitor your child's learning journey with detailed reports</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Flexible Scheduling</h4>
+                    <p className="text-gray-600 text-sm">Classes that fit your family's busy schedule</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                    <CheckCircle className="h-4 w-4 text-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900">Parent Dashboard</h4>
+                    <p className="text-gray-600 text-sm">Stay involved with real-time updates and insights</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social Proof */}
+              <div className="mt-8 pt-6 border-t border-emerald-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="flex items-center space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-600 mt-1">4.9/5 from 2,500+ reviews</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-semibold text-gray-900">10,000+</p>
+                    <p className="text-sm text-gray-600">Happy Students</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       {/* CTA Section */}
 
       <section className="py-20 bg-gradient-to-r from-cyan-500 to-teal-600">
@@ -362,15 +499,10 @@ const Home = () => {
           <div className="mt-8">
 
             <Link to="/book-trial">
-
-              <Button size="lg" className="bg-white text-teal-600 hover:bg-gray-100 font-semibold text-lg px-10 py-6 shadow-xl transition-all duration-300">
-
+              <Button size="xl" variant="outlineLight">
                 Book Your Free Trial Now
-
                 <ArrowRight className="ml-2 h-5 w-5" />
-
               </Button>
-
             </Link>
 
           </div>
