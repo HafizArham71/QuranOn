@@ -35,35 +35,31 @@ const Testimonials = () => {
           </div>
           
           {/* Category Filter */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex rounded-xl bg-gray-50 p-1.5 shadow-sm border border-gray-200">
-              {['All', 'Hifz', 'Nazira', 'Tarjuma', 'Tajweed', 'Arabic'].map((category) => (
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {['All', 'Hifz', 'Nazira', 'Tarjuma', 'Tajweed', 'Arabic'].map((category) => {
+              const isActive = selectedCategory === category;
+              return (
                 <button
                   key={category}
                   onClick={() => setSelectedCategory(category)}
-                  className={`px-5 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    selectedCategory === category
-                      ? 'bg-white text-teal-600 shadow-md transform scale-105'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-white/50'
+                  className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-cyan-600 to-teal-600 text-white shadow-md' 
+                      : 'bg-white/70 text-gray-700 hover:bg-white/90 border border-gray-200'
                   }`}
                 >
                   {category}
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredTestimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-teal-100"
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden border border-gray-100"
               >
-                {/* Animated Gradient Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-teal-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                
-                {/* Shimmer Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-50/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-800"></div>
                 
                 {/* Category Badge */}
                 <div className="absolute top-4 right-4 z-10">
@@ -71,10 +67,6 @@ const Testimonials = () => {
                     {testimonial.course}
                   </span>
                 </div>
-                
-                {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-teal-400/10 to-transparent rounded-full -translate-x-16 -translate-y-16"></div>
-                <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-tl from-cyan-400/10 to-transparent rounded-full translate-x-12 translate-y-12"></div>
                 
                 <div className="relative p-6">
                   <div className="flex items-center mb-4">
@@ -136,7 +128,7 @@ const Testimonials = () => {
                   </div>
                   
                   {/* Footer */}
-                  <div className="flex items-center justify-between pt-4 border-t border-teal-100">
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <div className="flex items-center space-x-3">
                       <div className="flex items-center text-sm text-gray-600 font-medium">
                         <div className="w-6 h-6 bg-teal-100 rounded-full flex items-center justify-center mr-2">
@@ -154,11 +146,6 @@ const Testimonials = () => {
                         </div>
                         Active
                       </div>
-                    </div>
-                    <div className="text-teal-600 opacity-0 group-hover:opacity-100 transition-all duration-400 transform translate-x-3 group-hover:translate-x-0">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
                     </div>
                   </div>
                 </div>

@@ -42,50 +42,60 @@ export const teachers = [
 export const testimonials = [
   {
     id: 1,
-    name: "Aisha Khan",
+    name: "Ahmed Khan",
     location: "Manchester, UK",
     rating: 5,
-    text: "Alhamdulillah! My daughter completed her first Juz in just 3 months. The teacher's patience and structured approach made all the difference. We're so grateful for this blessed academy.",
+    text: "Alhamdulillah! My son completed his first Juz in just 3 months. The structured method and patience of the teachers are exceptional.",
     course: "Nazira",
-    image: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&h=150&fit=crop&crop=face&auto=format"
-  },
-  {
-    id: 2,
-    name: "Mohammed Ibrahim",
-    location: "Toronto, Canada",
-    rating: 5,
-    text: "As a revert to Islam, I struggled with Arabic pronunciation. The one-on-one Tajweed classes transformed my recitation. Now I can lead Taraweeh prayers with confidence.",
-    course: "Tajweed",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
-    id: 3,
-    name: "Fatima Al-Rashid",
+    id: 2,
+    name: "Omar Al-Rashid",
     location: "Dubai, UAE",
     rating: 5,
-    text: "My son is memorizing the Quran with beautiful Tajweed. The teachers are true scholars who understand both traditional methods and modern teaching techniques. BarakAllahu feekum!",
+    text: "The teachers focus on both Tajweed and character building. My son loves Quran classes and waits eagerly for every session.",
     course: "Hifz",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face&auto=format"
+  },
+  {
+    id: 3,
+    name: "Muhammad Naveed",
+    location: "London, UK",
+    rating: 5,
+    text: "Grateful to my teacher for his patience, dedication, and guidance. His effort improved my pronunciation and boosted my Qur'an recitation confidence.",
+    course: "Tajweed",
+    image: "public/images/NaveedBhai.png"
   },
   {
     id: 4,
     name: "Abdullah Malik",
     location: "Sydney, Australia",
     rating: 5,
-    text: "Our family learns together now. The flexible scheduling allows both parents and children to study. The Islamic knowledge combined with Quran recitation is exactly what we needed.",
+    text: "Starting from Qaida, my son now reads Quran fluently. The teaching system is clear, disciplined, and child-friendly.",
+    course: "Qaida",
+    image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&crop=face&auto=format"
+  },
+  {
+    id: 5,
+    name: "Yusuf Farooq",
+    location: "Chicago, USA",
+    rating: 5,
+    text: "Learning Arabic alongside Quran helped me understand Allah's words directly. The explanations are simple yet deep.",
     course: "Arabic",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format"
   },
   {
-    id: 5,
-    name: "Mariam Yusuf",
-    location: "New York, USA",
+    id: 6,
+    name: "Ali Rahman",
+    location: "Birmingham, UK",
     rating: 5,
-    text: "From knowing nothing to reading Quran fluently in 6 months! The patience and dedication of the Ustadhs is remarkable. My children now love their Quran classes.",
+    text: "Tarjuma completely changed my relationship with the Quran. Understanding the meaning increased my khushu in salah.",
     course: "Tarjuma",
-    image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face&auto=format"
   }
 ];
+
 
 export const blogPosts = [
   {
