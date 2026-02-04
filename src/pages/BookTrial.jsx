@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, AlertCircle } from 'lucide-react';
+import { CheckCircle, AlertCircle, AlertTriangle, Send } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
@@ -1237,22 +1237,55 @@ const BookTrial = () => {
                           <Button
                             type="submit"
                             disabled={isSubmitting}
-                            className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold px-6 py-6 rounded-lg transition-colors duration-200"
+                            className="w-full bg-gradient-to-r from-teal-600 to-cyan-600 text-white font-semibold h-12 px-8 py-3 text-base rounded-lg transition-colors duration-200"
                           >
                             {isSubmitting ? (
-                              <span className="flex items-center space-x-2">
+                              <span className="flex items-center justify-center space-x-2">
                                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                 <span>Submitting...</span>
                               </span>
                             ) : (
-                              <span className="flex items-center space-x-2">
+                              <span className="flex items-center justify-center space-x-2">
                                 <span>Book Free Trial</span>
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
+                                <Send className="h-5 w-5" />
                               </span>
                             )}
                           </Button>
+                          
+                          {/* Form Status Messages */}
+                          {Object.keys(errors).length > 0 && (
+                            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                              <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-sm font-medium text-red-800">Please fix the following errors:</p>
+                                <ul className="text-sm text-red-700 mt-1 list-disc list-inside">
+                                  {Object.values(errors).map((error, index) => (
+                                    <li key={index}>{error}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {Object.keys(touched).length > 0 && Object.keys(errors).length === 0 && (
+                            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start space-x-2">
+                              <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-sm font-medium text-green-800">Form is ready to submit</p>
+                                <p className="text-sm text-green-700">All required fields are filled correctly</p>
+                              </div>
+                            </div>
+                          )}
+                          
+                          {Object.keys(touched).length > 0 && Object.keys(errors).length > 0 && Object.keys(errors).length < 3 && (
+                            <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg flex items-start space-x-2">
+                              <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5 flex-shrink-0" />
+                              <div>
+                                <p className="text-sm font-medium text-yellow-800">Almost there!</p>
+                                <p className="text-sm text-yellow-700">Just {Object.keys(errors).length} more {Object.keys(errors).length === 1 ? 'field' : 'fields'} to complete</p>
+                              </div>
+                            </div>
+                          )}
                           
                           <div className="text-sm text-gray-600 text-center mt-3">
                             <span className="font-medium">⚡ Quick submission</span> - We'll contact you within 24 hours

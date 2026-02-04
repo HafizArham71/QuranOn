@@ -504,8 +504,9 @@ const About = () => {
               Ready to experience the difference?
             </p>
             <Link to="/book-trial">
-              <Button size="lg" className="bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+              <Button variant="primary" size="lg" className="h-12 px-8 py-3 text-base">
                 Start Your Free Trial
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>
@@ -523,7 +524,7 @@ const About = () => {
           </p>
           <div className="mt-8">
             <Link to="/book-trial">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Start Your Free Trial Today
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

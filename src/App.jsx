@@ -21,6 +21,7 @@ import Contact from "./pages/Contact";
 import BookTrial from "./pages/BookTrial";
 import PrivacyPolicy from "./pages/PrivacyPolicySimple";
 import TermsOfService from "./pages/TermsOfService";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const isLoading = useElegantLoader(2500);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/book-trial" element={<BookTrial />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
         {/* WhatsApp Button - Update phoneNumber with your WhatsApp number (include country code, e.g., "15551234567" or "+15551234567") */}

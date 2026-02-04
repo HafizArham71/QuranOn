@@ -286,7 +286,7 @@ const Courses = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-teal-100/20 to-cyan-100/20 rounded-3xl blur-2xl"></div>
               
               {/* Main Card */}
-              <div className="relative bg-white/95 backdrop-blur-md rounded-3xl p-12 shadow-2xl border border-teal-200 max-w-5xl mx-auto overflow-hidden">
+              <div className="relative bg-white/95 backdrop-blur-md rounded-3xl p-8 sm:p-12 shadow-2xl border border-teal-200 max-w-5xl mx-auto overflow-hidden">
                 {/* Top Decoration */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400"></div>
                 
@@ -315,16 +315,18 @@ const Courses = () => {
                   </p>
                   
                   {/* Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/contact">
-                      <Button size="lg" variant="primary">
-                        Get Personalized Recommendations
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto sm:max-w-none">
+                    <Link to="/contact" className="w-full sm:w-auto">
+                      <Button size="lg" variant="primary" className="w-full sm:w-auto h-12 px-8 py-3 text-base">
+                        <span className="sm:hidden">Get Recommendations</span>
+                        <span className="hidden sm:inline">Get Personalized Recommendations</span>
+                        <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
                     </Link>
-                    <Link to="/book-trial">
-                      <Button size="lg" variant="outline">
-                        Try Free Assessment Class
+                    <Link to="/book-trial" className="w-full sm:w-auto">
+                      <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-2 border-teal-600 text-teal-600 hover:bg-teal-50 hover:border-teal-700 hover:text-teal-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 h-12 px-8 py-3 text-base">
+                        <span className="sm:hidden">Free Assessment</span>
+                        <span className="hidden sm:inline">Try Free Assessment Class</span>
                       </Button>
                     </Link>
                   </div>
@@ -475,7 +477,7 @@ const Courses = () => {
           </p>
           <div className="mt-8">
             <Link to="/book-trial">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Book Your Free Trial Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

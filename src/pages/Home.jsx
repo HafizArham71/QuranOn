@@ -59,64 +59,66 @@ const Home = () => {
         </div>
         
         {/* Main Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-24 sm:pb-32">
           <div className="text-center">
             {/* Trust Badge */}
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 border border-emerald-200 mb-8">
               <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-              <span className="text-emerald-700 text-sm font-medium">Trusted by 10,000+ Muslim Families Worldwide</span>
+              <span className="text-emerald-700 text-sm font-medium sm:hidden">Trusted by 10,000+ families</span>
+              <span className="hidden sm:inline text-emerald-700 text-sm font-medium">Trusted by 10,000+ Muslim Families Worldwide</span>
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-6">
-              <span className="block mb-2">Learn Quran Online with</span>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-4 sm:mb-6">
+              <span className="block mb-1 sm:mb-2">Learn Quran Online with</span>
               <span className="block bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
                 Expert Teachers
               </span>
             </h1>
             
             {/* Description */}
-            <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
               One-on-one live Quran classes with certified teachers. Personalized learning that adapts to your child's pace and schedule.
             </p>
             
             {/* Stats */}
-            <div className="flex flex-wrap justify-center items-center gap-8 mb-12">
-              <div className="flex items-center space-x-2">
-                <Users className="h-6 w-6 text-emerald-600" />
-                <span className="text-2xl font-bold text-gray-900">10,000+</span>
-                <span className="text-gray-600">Students</span>
+            <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center sm:items-center sm:gap-8 mb-8 sm:mb-12 max-w-md sm:max-w-none mx-auto">
+              <div className="flex items-center justify-center space-x-2">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">10,000+</span>
+                <span className="text-sm sm:text-base text-gray-600">Students</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Award className="h-6 w-6 text-emerald-600" />
-                <span className="text-2xl font-bold text-gray-900">500+</span>
-                <span className="text-gray-600">Teachers</span>
+              <div className="flex items-center justify-center space-x-2">
+                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">500+</span>
+                <span className="text-sm sm:text-base text-gray-600">Teachers</span>
               </div>
-              <div className="flex items-center space-x-2">
-                <Globe className="h-6 w-6 text-emerald-600" />
-                <span className="text-2xl font-bold text-gray-900">50+</span>
-                <span className="text-gray-600">Countries</span>
+              <div className="col-span-2 flex items-center justify-center space-x-2">
+                <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">50+</span>
+                <span className="text-sm sm:text-base text-gray-600">Countries</span>
               </div>
             </div>
             
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-16">
-              <Link to="/book-trial">
-                <Button size="xl" variant="default">
-                  Start Free Trial
-                  <ArrowRight className="ml-3 h-6 w-6" />
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-10 sm:mb-16 max-w-sm mx-auto sm:max-w-none">
+              <Link to="/book-trial" className="w-full sm:w-auto">
+                <Button variant="primary" size="lg" className="w-full sm:w-auto h-12 px-8 py-3 text-base">
+                  Start Your 3-Day Free Trial
+                  <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
                 </Button>
               </Link>
               
-              <Link to="/courses">
-                <Button size="xl" variant="outline">
+              <Link to="/courses" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto bg-transparent border-2 border-teal-600 text-teal-600 hover:bg-teal-50 hover:border-teal-700 hover:text-teal-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 h-12 px-8 py-3 text-base">
                   View Courses
+                  <ChevronDown className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
             </div>
             
             {/* Features */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
                 <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <BookOpen className="h-6 w-6 text-emerald-600" />
@@ -143,7 +145,7 @@ const Home = () => {
             </div>
             
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-8 mt-12 text-gray-600">
+            <div className="hidden sm:flex flex-wrap justify-center items-center gap-8 mt-12 text-gray-600">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500" />
                 <span>No credit card required</span>
@@ -280,7 +282,7 @@ const Home = () => {
 
           <div className="text-center mt-16">
             <Link to="/services">
-              <Button size="lg" variant="primary">
+              <Button variant="primary" size="lg" className="h-12 px-8 py-3 text-base">
                 Explore All Services
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -387,7 +389,7 @@ const Home = () => {
 
               {/* CTA Button */}
               <Link to="/book-trial">
-                <Button size="lg" variant="default">
+                <Button variant="default" size="lg" className="h-12 px-8 py-3 text-base">
                   Start Your 3-Day Free Trial
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
@@ -499,7 +501,7 @@ const Home = () => {
           <div className="mt-8">
 
             <Link to="/book-trial">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Book Your Free Trial Now
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

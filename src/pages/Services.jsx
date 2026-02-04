@@ -226,13 +226,13 @@ const Services = () => {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/book-trial">
-                    <Button size="lg" variant="primary">
+                    <Button size="lg" variant="primary" className="h-12 px-8 py-3 text-base">
                       Start Free Trial
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                   <Link to="/courses">
-                    <Button size="lg" variant="outline">
+                    <Button size="lg" variant="outline" className="bg-transparent border-2 border-teal-600 text-teal-600 hover:bg-teal-50 hover:border-teal-700 hover:text-teal-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 h-12 px-8 py-3 text-base">
                       Learn More
                     </Button>
                   </Link>
@@ -301,14 +301,15 @@ const Services = () => {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/book-trial">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Book Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to="/contact">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Contact Us for Pricing
+                <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>

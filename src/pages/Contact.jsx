@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, MessageCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageCircle, AlertCircle, Send, CheckCircle, AlertTriangle } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
@@ -529,10 +529,45 @@ const Contact = () => {
                       size="lg"
                       variant="primary"
                       disabled={isSubmitting}
-                      className="w-full"
+                      className="w-full h-12 px-8 py-3 text-base"
                     >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                      {isSubmitting ? (
+                        <span className="flex items-center justify-center space-x-2">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                          <span>Sending...</span>
+                        </span>
+                      ) : (
+                        <span className="flex items-center justify-center space-x-2">
+                          <span>Send Message</span>
+                          <Send className="h-5 w-5" />
+                        </span>
+                      )}
                     </Button>
+                    
+                    {/* Form Status Messages */}
+                    {Object.keys(errors).length > 0 && (
+                      <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                        <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-red-800">Please fix the following errors:</p>
+                          <ul className="text-sm text-red-700 mt-1 list-disc list-inside">
+                            {Object.values(errors).map((error, index) => (
+                              <li key={index}>{error}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {Object.keys(touched).length > 0 && Object.keys(errors).length === 0 && (
+                      <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start space-x-2">
+                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-green-800">Form is ready to submit</p>
+                          <p className="text-sm text-green-700">All fields are filled correctly</p>
+                        </div>
+                      </div>
+                    )}
                   </form>
                 </CardContent>
               </Card>

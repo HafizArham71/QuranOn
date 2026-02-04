@@ -65,7 +65,7 @@ export const testimonials = [
     rating: 5,
     text: "Grateful to my teacher for his patience, dedication, and guidance. His effort improved my pronunciation and boosted my Qur'an recitation confidence.",
     course: "Tajweed",
-    image: "public/images/NaveedBhai.png"
+    image: "images/NaveedBhai.png"
   },
   {
     id: 4,

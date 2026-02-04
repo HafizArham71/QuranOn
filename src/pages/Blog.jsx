@@ -83,7 +83,7 @@ const Blog = () => {
           </p>
           <div className="mt-8">
             <Link to="/book-trial">
-              <Button size="xl" variant="outlineLight">
+              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
                 Book Your Free Trial
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
