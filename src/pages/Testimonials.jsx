@@ -26,7 +26,7 @@ const Testimonials = () => {
       <section className="bg-gradient-to-br from-cyan-50 via-teal-50 to-blue-50 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
+            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
               Student <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-teal-600">Testimonials</span>
             </h1>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto">

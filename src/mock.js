@@ -437,46 +437,6 @@ export const services = [
   }
 ];
 
-export const homeData = {
-  hero: {
-    title: "Learn Quran Online with",
-    subtitle: "Qualified Teachers",
-    description: "One-on-one live Quran classes for kids and adults. Expert teachers, flexible schedules, and personalized learning from the comfort of your home."
-  },
-  stats: [
-    { icon: "Users", label: 'Active Students', value: '50+' },
-    { icon: "Globe", label: 'Countries Served', value: '10+' },
-    { icon: "Award", label: 'Qualified Teachers', value: '10+' },
-    { icon: "Clock", label: 'Classes Completed', value: '100+' },
-  ],
-  whyChooseUs: [
-    {
-      title: 'Qualified Teachers',
-      description: 'All our teachers are Hafiz/Hafiza with Ijazah and years of teaching experience.',
-    },
-    {
-      title: 'One-on-One Classes',
-      description: 'Personalized attention ensures every student progresses at their optimal pace.',
-    },
-    {
-      title: 'Flexible Scheduling',
-      description: 'Choose class times that fit your family routine. Available 7 days a week.',
-    },
-    {
-      title: 'Affordable Pricing',
-      description: 'Quality Quran education accessible to everyone with family discounts available.',
-    },
-    {
-      title: 'Safe Learning',
-      description: 'Learn from the comfort of home with full parental supervision and monitoring.',
-    },
-    {
-      title: 'Bilingual Support',
-      description: 'Instruction available in English and Urdu for better understanding.',
-    },
-  ]
-};
-
 export const aboutData = {
   hero: {
     title: "About Quran Academy",

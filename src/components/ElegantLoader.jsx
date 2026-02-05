@@ -1,84 +1,107 @@
-import React, { useEffect, useState } from 'react';
-import { BookOpen } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const ElegantLoader = () => {
-  const [loading, setLoading] = useState(true);
-  const [scale, setScale] = useState(0.8);
-  const [opacity, setOpacity] = useState(0);
+  const [loadingStage, setLoadingStage] = useState('Loading');
+  const [progress, setProgress] = useState(0);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
-    // Initial entrance animation
-    const entranceTimer = setTimeout(() => {
-      setScale(1);
-      setOpacity(1);
-    }, 100);
+    const stages = [
+      { name: 'Loading', duration: 1000 },
+      { name: 'Processing', duration: 800 },
+      { name: 'Ready', duration: 600 }
+    ];
 
-    // Exit animation
-    const exitTimer = setTimeout(() => {
-      setScale(0.9);
-      setOpacity(0);
-    }, 2000);
+    let currentStage = 0;
+    let stageProgress = 0;
 
-    // Complete loading
-    const completeTimer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-
-    return () => {
-      clearTimeout(entranceTimer);
-      clearTimeout(exitTimer);
-      clearTimeout(completeTimer);
+    const updateProgress = () => {
+      if (currentStage < stages.length) {
+        const stage = stages[currentStage];
+        stageProgress += 2;
+        
+        if (stageProgress >= 100) {
+          currentStage++;
+          stageProgress = 0;
+        }
+        
+        const totalProgress = (currentStage * 100 + stageProgress) / stages.length;
+        setProgress(Math.min(totalProgress, 95));
+        
+        if (currentStage < stages.length) {
+          setLoadingStage(stages[currentStage].name);
+        } else {
+          // Animation complete
+          setLoadingStage('Ready');
+          setProgress(100);
+          setAnimationComplete(true);
+          
+          // Notify parent that animation is complete
+          window.dispatchEvent(new CustomEvent('loaderAnimationComplete'));
+        }
+      }
     };
+
+    const interval = setInterval(updateProgress, 20);
+    return () => clearInterval(interval);
   }, []);
 
-  if (!loading) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-50 to-teal-50">
-      <div 
-        className="text-center transition-all duration-700 ease-out"
-        style={{ 
-          transform: `scale(${scale})`,
-          opacity: opacity
-        }}
-      >
-        {/* Elegant Logo Container */}
-        <div className="relative mb-8">
-          {/* Outer Ring */}
-          <div className="w-20 h-20 mx-auto relative">
-            {/* Rotating Ring */}
-            <div className="absolute inset-0 rounded-full border-2 border-teal-200 border-t-teal-600 animate-spin"></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
+      <div className="text-center">
+        {/* Logo with subtle animation */}
+        <div className="mb-8">
+          <div className="relative w-20 h-20 mx-auto">
+            {/* Rotating ring */}
+            <div className={`absolute inset-0 rounded-full border-2 border-teal-100 border-t-teal-500 transition-all duration-500 ${animationComplete ? 'animate-pulse' : 'animate-spin'}`}></div>
             
-            {/* Center Circle with Header Logo */}
-            <div className="absolute inset-2 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-full shadow-lg flex items-center justify-center">
-              <BookOpen className="h-8 w-8 text-white" />
+            {/* Center logo */}
+            <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+              <img 
+                src="/images/LogoTransparent.png" 
+                alt="QuranOn" 
+                className={`w-12 h-12 transition-all duration-500 ${animationComplete ? 'scale-110' : 'scale-100'}`}
+              />
             </div>
           </div>
-          
-          {/* Subtle Glow Effect */}
-          <div className="absolute inset-0 w-20 h-20 mx-auto bg-teal-100 rounded-full blur-xl opacity-30 animate-pulse"></div>
         </div>
 
-        {/* Brand Name - Matching Header */}
-        <div className="flex flex-col items-center mb-3">
-          <span className="text-2xl font-bold text-gray-900 tracking-wide">QuranOn</span>
-          <span className="text-xs text-teal-600 font-light">Learn with Confidence</span>
-        </div>
-        
-        {/* Elegant Loading Line */}
-        <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-teal-400 to-transparent mx-auto mb-4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-600 to-transparent animate-pulse"></div>
-        </div>
+        {/* Brand name */}
+        <h1 className={`text-2xl font-semibold mb-3 transition-all duration-500 ${animationComplete ? 'text-teal-600' : 'text-gray-900'}`}>
+          QuranOn
+        </h1>
 
-        {/* Subtle Loading Text */}
-        <p className="text-xs text-gray-500 font-light tracking-widest uppercase">
-          Learning
+        {/* Loading stage */}
+        <p className={`text-sm mb-4 font-medium transition-all duration-500 ${animationComplete ? 'text-teal-600' : 'text-gray-600'}`}>
+          {loadingStage}
         </p>
 
-        {/* Floating Particles */}
-        <div className="absolute top-20 left-20 w-1 h-1 bg-teal-300 rounded-full animate-ping"></div>
-        <div className="absolute top-32 right-24 w-1 h-1 bg-teal-400 rounded-full animate-ping delay-75"></div>
-        <div className="absolute bottom-24 left-32 w-1 h-1 bg-teal-300 rounded-full animate-ping delay-150"></div>
+        {/* Progress bar */}
+        <div className="w-40 h-1 bg-gray-200 rounded-full mx-auto mb-4 overflow-hidden">
+          <div 
+            className={`h-full rounded-full transition-all duration-500 ease-out ${animationComplete ? 'bg-gradient-to-r from-teal-500 to-emerald-500' : 'bg-gradient-to-r from-teal-400 to-teal-600'}`}
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+
+        {/* Simple loading dots - hide when complete */}
+        {!animationComplete && (
+          <div className="flex justify-center space-x-1.5">
+            <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce"></div>
+            <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+            <div className="w-2 h-2 bg-teal-500 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+          </div>
+        )}
+
+        {/* Success indicator - show when complete */}
+        {animationComplete && (
+          <div className="flex items-center justify-center space-x-2 text-teal-600">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+            </svg>
+            <span className="text-sm font-medium">Complete</span>
+          </div>
+        )}
       </div>
     </div>
   );

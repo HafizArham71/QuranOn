@@ -9,6 +9,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { Toaster } from "./components/ui/sonner";
 import ElegantLoader from "./components/ElegantLoader";
 import { useElegantLoader } from "./hooks/useElegantLoader";
+import { usePageTitle } from "./hooks/usePageTitle";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
@@ -22,9 +23,10 @@ import BookTrial from "./pages/BookTrial";
 import PrivacyPolicy from "./pages/PrivacyPolicySimple";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
+import PageTitleManager from "./components/PageTitleManager";
 
 function App() {
-  const isLoading = useElegantLoader(2500);
+  const isLoading = useElegantLoader();
 
   if (isLoading) {
     return <ElegantLoader />;
@@ -35,6 +37,7 @@ function App() {
       <BrowserRouter basename="/">
         <ScrollToTop />
         <Header />
+        <PageTitleManager />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

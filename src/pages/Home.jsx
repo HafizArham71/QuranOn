@@ -8,35 +8,13 @@ import { Button } from '../components/ui/button';
 
 import { Card, CardContent } from '../components/ui/card';
 
-import { services, homeData } from '../mock';
-
-
-
-const iconMap = {
-
-  BookOpen: BookOpen,
-
-  Brain: Brain,
-
-  Mic2: Mic2,
-
-  Heart: Heart,
-
-};
-
-
-
-const statsIconMap = {
-
-  Users: Users,
-
-  Globe: Globe,
-
-  Award: Award,
-
-  Clock: Clock,
-
-};
+import { 
+  homePageContent, 
+  iconMap, 
+  statsIconMap, 
+  getIconComponent,
+  getGradientClass 
+} from '../api/homeApi';
 
 
 
@@ -62,102 +40,83 @@ const Home = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 pb-24 sm:pb-32">
           <div className="text-center">
             {/* Trust Badge */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 border border-emerald-200 mb-8">
+            <div className={homePageContent.hero.trustBadge.className}>
               <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-              <span className="text-emerald-700 text-sm font-medium sm:hidden">Trusted by 10,000+ families</span>
-              <span className="hidden sm:inline text-emerald-700 text-sm font-medium">Trusted by 10,000+ Muslim Families Worldwide</span>
+              <span className="hidden sm:inline text-emerald-700 text-sm font-medium">{homePageContent.hero.trustBadge.text}</span>
+              <span className="text-emerald-700 text-sm font-medium sm:hidden">{homePageContent.hero.trustBadge.mobileText}</span>
             </div>
             
             {/* Main Heading */}
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold text-gray-900 mb-4 sm:mb-6">
-              <span className="block mb-1 sm:mb-2">Learn Quran Online with</span>
+            <h1 className={homePageContent.hero.title.className}>
+              <span className="block mb-1 sm:mb-2">{homePageContent.hero.title.main}</span>
               <span className="block bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
-                Expert Teachers
+                {homePageContent.hero.title.gradient}
               </span>
             </h1>
             
             {/* Description */}
-            <p className="text-base sm:text-xl text-gray-600 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
-              One-on-one live Quran classes with certified teachers. Personalized learning that adapts to your child's pace and schedule.
+            <p className={homePageContent.hero.description.className}>
+              {homePageContent.hero.description.text}
             </p>
             
             {/* Stats */}
             <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:justify-center sm:items-center sm:gap-8 mb-8 sm:mb-12 max-w-md sm:max-w-none mx-auto">
-              <div className="flex items-center justify-center space-x-2">
-                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
-                <span className="text-xl sm:text-2xl font-bold text-gray-900">10,000+</span>
-                <span className="text-sm sm:text-base text-gray-600">Students</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2">
-                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
-                <span className="text-xl sm:text-2xl font-bold text-gray-900">500+</span>
-                <span className="text-sm sm:text-base text-gray-600">Teachers</span>
-              </div>
-              <div className="col-span-2 flex items-center justify-center space-x-2">
-                <Globe className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
-                <span className="text-xl sm:text-2xl font-bold text-gray-900">50+</span>
-                <span className="text-sm sm:text-base text-gray-600">Countries</span>
-              </div>
+              {homePageContent.hero.stats.map((stat, index) => {
+                const IconComponent = getIconComponent(stat.icon, statsIconMap);
+                return (
+                  <div key={index} className={stat.className}>
+                    <IconComponent className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
+                    <span className="text-xl sm:text-2xl font-bold text-gray-900">{stat.value}</span>
+                    <span className="text-sm sm:text-base text-gray-600">{stat.label}</span>
+                  </div>
+                );
+              })}
             </div>
             
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-10 sm:mb-16 max-w-sm mx-auto sm:max-w-none">
-              <Link to="/book-trial" className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" className="w-full sm:w-auto h-12 px-8 py-3 text-base">
-                  Start Your 3-Day Free Trial
-                  <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
-                </Button>
-              </Link>
-              
-              <Link to="/courses" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto bg-transparent border-2 border-teal-600 text-teal-600 hover:bg-teal-50 hover:border-teal-700 hover:text-teal-700 shadow-md hover:shadow-lg hover:-translate-y-0.5 h-12 px-8 py-3 text-base">
-                  View Courses
-                  <ChevronDown className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+              {homePageContent.hero.ctaButtons.map((button, index) => (
+                <Link key={index} to={button.to} className="w-full sm:w-auto">
+                  <Button variant={button.variant} size={button.size} className={button.className}>
+                    {button.text}
+                    {button.showIcon && (
+                      <>
+                        {button.text === 'View Courses' ? (
+                          <ChevronDown className="ml-2 h-5 w-5" />
+                        ) : (
+                          <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6" />
+                        )}
+                      </>
+                    )}
+                  </Button>
+                </Link>
+              ))}
             </div>
             
             {/* Features */}
             <div className="hidden sm:grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
-                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <BookOpen className="h-6 w-6 text-emerald-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Quran Reading</h3>
-                <p className="text-gray-600 text-sm">From basics to fluent recitation</p>
-              </div>
-              
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
-                <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Brain className="h-6 w-6 text-teal-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Memorization</h3>
-                <p className="text-gray-600 text-sm">Structured Hifz programs</p>
-              </div>
-              
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
-                <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Mic2 className="h-6 w-6 text-cyan-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Tajweed</h3>
-                <p className="text-gray-600 text-sm">Perfect pronunciation</p>
-              </div>
+              {homePageContent.hero.features.map((feature, index) => {
+                const IconComponent = getIconComponent(feature.icon, iconMap);
+                return (
+                  <div key={index} className="bg-white/80 backdrop-blur-sm rounded-xl p-6 border border-emerald-100">
+                    <div className={`w-12 h-12 ${feature.iconBg} rounded-lg flex items-center justify-center mb-4 mx-auto`}>
+                      <IconComponent className={`h-6 w-6 ${feature.iconColor}`} />
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                    <p className="text-gray-600 text-sm">{feature.description}</p>
+                  </div>
+                );
+              })}
             </div>
             
             {/* Trust Indicators */}
             <div className="hidden sm:flex flex-wrap justify-center items-center gap-8 mt-12 text-gray-600">
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>No credit card required</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Free trial class</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CheckCircle className="h-5 w-5 text-green-500" />
-                <span>Expert teachers</span>
-              </div>
+              {homePageContent.hero.trustIndicators.map((indicator, index) => (
+                <div key={index} className="flex items-center space-x-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span>{indicator.text}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -173,45 +132,25 @@ const Home = () => {
 
 
       {/* Stats Section */}
-
       <section className="bg-white py-16">
-
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
           <div className="grid grid-cols-2 gap-6 lg:grid-cols-4">
-
-            {homeData.stats.map((stat, index) => {
-
-              const IconComponent = statsIconMap[stat.icon];
-
+            {homePageContent.stats.stats.map((stat, index) => {
+              const IconComponent = getIconComponent(stat.icon, statsIconMap);
               return (
-
                 <div key={index} className="text-center">
-
                   <div className="flex justify-center mb-3">
-
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-teal-100">
-
-                      <IconComponent className="h-7 w-7 text-teal-600" />
-
+                    <div className={`flex h-14 w-14 items-center justify-center rounded-full ${stat.bgColor}`}>
+                      <IconComponent className={`h-7 w-7 ${stat.iconColor}`} />
                     </div>
-
                   </div>
-
                   <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-
                   <p className="mt-1 text-sm text-gray-600">{stat.label}</p>
-
                 </div>
-
               );
-
             })}
-
           </div>
-
         </div>
-
       </section>
 
 
@@ -227,18 +166,18 @@ const Home = () => {
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className={homePageContent.services.header.titleClassName}>
               Our <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Services</span>
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-teal-500 to-cyan-500 mx-auto mb-6"></div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Comprehensive Quran education tailored to your spiritual journey
+            <p className={homePageContent.services.header.descriptionClassName}>
+              {homePageContent.services.header.subtitle}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => {
-              const IconComponent = iconMap[service.icon];
+            {homePageContent.services.services.map((service, index) => {
+              const IconComponent = getIconComponent(service.icon, iconMap);
               
               return (
                 <div key={service.id} className="group relative">
@@ -247,12 +186,7 @@ const Home = () => {
                   
                   <Card className="relative border-none shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-white rounded-2xl overflow-hidden">
                     {/* Gradient top border */}
-                    <div className={`h-2 bg-gradient-to-r ${
-                      index === 0 ? 'from-teal-500 to-cyan-600' :
-                      index === 1 ? 'from-cyan-500 to-teal-600' :
-                      index === 2 ? 'from-emerald-500 to-teal-600' :
-                      'from-teal-500 to-emerald-600'
-                    }`}></div>
+                    <div className={`h-2 bg-gradient-to-r ${service.gradient}`}></div>
                     
                     <CardContent className="p-8">
                       {/* Enhanced icon container */}
@@ -281,10 +215,12 @@ const Home = () => {
           </div>
 
           <div className="text-center mt-16">
-            <Link to="/services">
-              <Button variant="primary" size="lg" className="h-12 px-8 py-3 text-base">
-                Explore All Services
-                <ArrowRight className="ml-2 h-5 w-5" />
+            <Link to={homePageContent.services.ctaButton.to}>
+              <Button variant={homePageContent.services.ctaButton.variant} size={homePageContent.services.ctaButton.size} className={homePageContent.services.ctaButton.className}>
+                {homePageContent.services.ctaButton.text}
+                {homePageContent.services.ctaButton.showIcon && (
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                )}
               </Button>
             </Link>
           </div>
@@ -294,51 +230,31 @@ const Home = () => {
 
 
       {/* Why Choose Us */}
-
       <section className="py-20 bg-white">
-
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
           <div className="text-center mb-12">
-
-            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">Why Choose Quran Academy?</h2>
-
-            <p className="mt-4 text-lg text-gray-600">
-
-              Trusted by thousands of families worldwide
-
+            <h2 className={homePageContent.whyChooseUs.header.titleClassName}>
+              {homePageContent.whyChooseUs.header.title}
+            </h2>
+            <p className={homePageContent.whyChooseUs.header.subtitleClassName}>
+              {homePageContent.whyChooseUs.header.subtitle}
             </p>
-
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {homeData.whyChooseUs.map((item, index) => (
-
+            {homePageContent.whyChooseUs.reasons.map((item, index) => (
               <div key={index} className="flex items-start space-x-4">
-
                 <div className="flex-shrink-0">
-
-                  <CheckCircle className="h-6 w-6 text-teal-600" />
-
+                  <CheckCircle className={`h-6 w-6 ${item.iconColor}`} />
                 </div>
-
                 <div>
-
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-
                   <p className="text-gray-600">{item.description}</p>
-
                 </div>
-
               </div>
-
             ))}
-
           </div>
-
         </div>
-
       </section>
 
 
@@ -357,103 +273,65 @@ const Home = () => {
             
             {/* Left Content */}
             <div>
-              <div className="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 border border-emerald-200 mb-6">
+              <div className={homePageContent.trialSection.leftContent.badge.className}>
                 <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2 animate-pulse"></span>
-                <span className="text-emerald-700 text-sm font-medium">Limited Time Offer</span>
+                <span className="text-emerald-700 text-sm font-medium">{homePageContent.trialSection.leftContent.badge.text}</span>
               </div>
               
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Start Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Free Trial</span> Today
+              <h2 className={homePageContent.trialSection.leftContent.titleClassName}>
+                Start Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">{homePageContent.trialSection.leftContent.titleGradient}</span> Today
               </h2>
               
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Join 10,000+ Muslim families who trust QuranOn for their children's Islamic education. 
-                No credit card required. Cancel anytime.
+              <p className={homePageContent.trialSection.leftContent.descriptionClassName}>
+                {homePageContent.trialSection.leftContent.description}
               </p>
 
               {/* Trust Badges */}
               <div className="flex flex-wrap gap-4 mb-8">
-                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
-                  <Shield className="h-5 w-5 text-emerald-600" />
-                  <span className="text-sm font-medium text-gray-700">100% Secure</span>
-                </div>
-                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
-                  <Clock className="h-5 w-5 text-emerald-600" />
-                  <span className="text-sm font-medium text-gray-700">Cancel Anytime</span>
-                </div>
-                <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2 rounded-lg">
-                  <Award className="h-5 w-5 text-emerald-600" />
-                  <span className="text-sm font-medium text-gray-700">Certified Teachers</span>
-                </div>
+                {homePageContent.trialSection.leftContent.trustBadges.map((badge, index) => {
+                  const IconComponent = getIconComponent(badge.icon, { Shield, Clock, Award });
+                  return (
+                    <div key={index} className={badge.className}>
+                      <IconComponent className="h-5 w-5 text-emerald-600" />
+                      <span className="text-sm font-medium text-gray-700">{badge.text}</span>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* CTA Button */}
-              <Link to="/book-trial">
-                <Button variant="default" size="lg" className="h-12 px-8 py-3 text-base">
-                  Start Your 3-Day Free Trial
-                  <ArrowRight className="ml-3 h-6 w-6" />
+              <Link to={homePageContent.trialSection.leftContent.ctaButton.to}>
+                <Button variant={homePageContent.trialSection.leftContent.ctaButton.variant} size={homePageContent.trialSection.leftContent.ctaButton.size} className={homePageContent.trialSection.leftContent.ctaButton.className}>
+                  {homePageContent.trialSection.leftContent.ctaButton.text}
+                  {homePageContent.trialSection.leftContent.ctaButton.showIcon && (
+                    <ArrowRight className="ml-3 h-6 w-6" />
+                  )}
                 </Button>
               </Link>
 
               <p className="text-sm text-gray-500 mt-4">
-                ✓ No hidden fees ✓ Instant access ✓ 24/7 support
+                {homePageContent.trialSection.leftContent.footerNote}
               </p>
             </div>
 
             {/* Right Content - Benefits Grid */}
             <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl p-8 border border-emerald-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">What You'll Get:</h3>
+              <h3 className={homePageContent.trialSection.rightContent.titleClassName}>
+                {homePageContent.trialSection.rightContent.title}
+              </h3>
               
               <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
-                    <CheckCircle className="h-4 w-4 text-white" />
+                {homePageContent.trialSection.rightContent.benefits.map((benefit, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
+                      <CheckCircle className="h-4 w-4 text-white" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{benefit.title}</h4>
+                      <p className="text-gray-600 text-sm">{benefit.description}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Personalized Learning Plan</h4>
-                    <p className="text-gray-600 text-sm">Custom curriculum based on your child's level and goals</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
-                    <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">One-on-One Sessions</h4>
-                    <p className="text-gray-600 text-sm">Individual attention from certified Quran teachers</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
-                    <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Progress Tracking</h4>
-                    <p className="text-gray-600 text-sm">Monitor your child's learning journey with detailed reports</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
-                    <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Flexible Scheduling</h4>
-                    <p className="text-gray-600 text-sm">Classes that fit your family's busy schedule</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center mt-1">
-                    <CheckCircle className="h-4 w-4 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Parent Dashboard</h4>
-                    <p className="text-gray-600 text-sm">Stay involved with real-time updates and insights</p>
-                  </div>
-                </div>
+                ))}
               </div>
 
               {/* Social Proof */}
@@ -465,11 +343,11 @@ const Home = () => {
                         <Star key={star} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                       ))}
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">4.9/5 from 2,500+ reviews</p>
+                    <p className="text-sm text-gray-600 mt-1">{homePageContent.trialSection.rightContent.socialProof.rating}/5 from {homePageContent.trialSection.rightContent.socialProof.totalReviews} reviews</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-gray-900">10,000+</p>
-                    <p className="text-sm text-gray-600">Happy Students</p>
+                    <p className="text-sm font-semibold text-gray-900">{homePageContent.trialSection.rightContent.socialProof.studentsCount}</p>
+                    <p className="text-sm text-gray-600">{homePageContent.trialSection.rightContent.socialProof.studentsLabel}</p>
                   </div>
                 </div>
               </div>
@@ -481,36 +359,27 @@ const Home = () => {
 
 
       {/* CTA Section */}
-
       <section className="py-20 bg-gradient-to-r from-cyan-500 to-teal-600">
-
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">
-
-            Begin Your Quran Journey Today
-
+          <h2 className={homePageContent.finalCta.titleClassName}>
+            {homePageContent.finalCta.title}
           </h2>
 
-          <p className="mt-4 text-lg text-white/90">
-
-            Experience our teaching quality with a free trial class. No commitment required.
-
+          <p className={homePageContent.finalCta.subtitleClassName}>
+            {homePageContent.finalCta.subtitle}
           </p>
 
           <div className="mt-8">
-
-            <Link to="/book-trial">
-              <Button variant="outlineLight" size="lg" className="h-12 px-8 py-3 text-base">
-                Book Your Free Trial Now
-                <ArrowRight className="ml-2 h-5 w-5" />
+            <Link to={homePageContent.finalCta.ctaButton.to}>
+              <Button variant={homePageContent.finalCta.ctaButton.variant} size={homePageContent.finalCta.ctaButton.size} className={homePageContent.finalCta.ctaButton.className}>
+                {homePageContent.finalCta.ctaButton.text}
+                {homePageContent.finalCta.ctaButton.showIcon && (
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                )}
               </Button>
             </Link>
-
           </div>
-
         </div>
-
       </section>
 
     </div>

@@ -12,8 +12,12 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-500 to-teal-600">
-                <BookOpen className="h-6 w-6 text-white" />
+              <div className="flex h-10 w-10 items-center justify-center">
+                <img 
+                  src="/images/LogoTransparent.png" 
+                  alt="QuranOn Logo" 
+                  className="h-10 w-10 object-contain"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold text-gray-900">QuranOn</span>
