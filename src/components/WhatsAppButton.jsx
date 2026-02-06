@@ -1,10 +1,11 @@
 import React from 'react';
 
-const WhatsAppButton = ({ phoneNumber = "1234567890" }) => {
+const WhatsAppButton = ({ phoneNumber = "1234567890", message = "Hello! I'm interested in learning more about QuranOn's online Quran courses." }) => {
   // Format phone number: remove any non-digit characters and ensure country code
   // Example: +1 (555) 123-4567 or 15551234567 should work
   const formattedNumber = phoneNumber.replace(/\D/g, '');
-  const whatsappUrl = `https://wa.me/${formattedNumber}`;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${formattedNumber}?text=${encodedMessage}`;
 
   const handleClick = () => {
     window.open(whatsappUrl, '_blank');

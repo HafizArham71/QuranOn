@@ -28,7 +28,7 @@ const Footer = () => {
               Trusted online Quran education for students worldwide. Expert teachers, flexible schedules, and personalized learning.
             </p>
             <div className="flex space-x-3">
-              <a href="#" className="text-gray-600 hover:text-teal-600 transition-colors">
+              <a href="https://www.facebook.com/profile.php?id=61587238274658" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-teal-600 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="#" className="text-gray-600 hover:text-teal-600 transition-colors">

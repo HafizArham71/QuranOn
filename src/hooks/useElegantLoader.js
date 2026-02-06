@@ -1,158 +1,170 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-export const useElegantLoader = () => {
+/**
+ * Custom hook that waits for browser load, critical resources, and your app data.
+ */
+export const useElegantLoader = (loaders = []) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isWebsiteLoaded, setIsWebsiteLoaded] = useState(false);
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
+  const [resourcesLoaded, setResourcesLoaded] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
-    const checkAllResourcesLoaded = () => {
-      return new Promise((resolve) => {
-        let resourcesChecked = 0;
-        const totalChecks = 4; // DOM, Images, Fonts, Network Resources
-        
-        const checkComplete = () => {
-          resourcesChecked++;
-          if (resourcesChecked === totalChecks) {
-            resolve();
-          }
-        };
+    let cancelled = false;
 
-        // 1. Check DOM readiness
-        if (document.readyState === 'complete') {
-          checkComplete();
+    // Wait for window load event
+    const waitForBrowserLoad = () =>
+      new Promise((resolve) => {
+        if (document.readyState === "complete") {
+          resolve();
         } else {
-          window.addEventListener('load', checkComplete);
+          window.addEventListener("load", resolve, { once: true });
         }
+      });
 
-        // 2. Check all images are loaded
-        const checkImages = () => {
+    // Wait for fonts to be fully loaded (if using font loading API)
+    const waitForFonts = () =>
+      document.fonts?.ready || Promise.resolve();
+
+    // Wait for all images (including lazy-loaded images)
+    const waitForImages = () => {
+      return new Promise((resolve) => {
+        // Wait a bit for DOM to populate
+        setTimeout(() => {
           const images = Array.from(document.images);
           if (images.length === 0) {
-            checkComplete();
+            resolve(); // No images to load
             return;
           }
 
-          let loadedImages = 0;
-          const imagePromises = images.map(img => {
+          let loadedCount = 0;
+          const totalImages = images.length;
+
+          const checkImage = (img) => {
             return new Promise((imgResolve) => {
               if (img.complete) {
-                loadedImages++;
                 imgResolve();
-              } else {
-                img.addEventListener('load', () => {
-                  loadedImages++;
-                  imgResolve();
-                });
-                img.addEventListener('error', () => {
-                  loadedImages++;
-                  imgResolve();
-                });
+                return;
               }
+
+              const handleLoad = () => {
+                imgResolve();
+              };
+
+              const handleError = () => {
+                imgResolve(); // Resolve even on error to not block
+              };
+
+              img.addEventListener('load', handleLoad, { once: true });
+              img.addEventListener('error', handleError, { once: true });
+
+              // Fallback timeout
+              setTimeout(() => {
+                imgResolve();
+              }, 3000);
             });
-          });
+          };
 
-          Promise.all(imagePromises).then(() => {
-            checkComplete();
-          });
-        };
-
-        // Small delay for images to be available in DOM
-        setTimeout(checkImages, 100);
-
-        // 3. Check fonts are loaded
-        if (document.fonts && document.fonts.ready) {
-          document.fonts.ready.then(() => {
-            checkComplete();
-          });
-        } else {
-          // Fallback for older browsers
-          setTimeout(checkComplete, 1000);
-        }
-
-        // 4. Check critical network resources (CSS, JS)
-        const checkNetworkResources = () => {
-          // Check if performance API is available
-          if (window.performance && window.performance.getEntriesByType) {
-            const resources = window.performance.getEntriesByType('resource');
-            const criticalResources = resources.filter(resource => 
-              resource.initiatorType === 'script' || 
-              resource.initiatorType === 'stylesheet' ||
-              resource.initiatorType === 'link'
-            );
-            
-            // Check if critical resources are loaded
-            const loadedResources = criticalResources.filter(resource => 
-              resource.transferSize > 0 || resource.responseEnd > 0
-            );
-
-            // If we have resources and they're loaded, or wait for timeout
-            if (criticalResources.length === 0 || loadedResources.length === criticalResources.length) {
-              checkComplete();
-            } else {
-              // Wait a bit more for network resources
-              setTimeout(checkComplete, 2000);
-            }
-          } else {
-            // Fallback - wait for reasonable time
-            setTimeout(checkComplete, 2000);
-          }
-        };
-
-        setTimeout(checkNetworkResources, 500);
+          Promise.all(images.map(checkImage)).then(resolve);
+        }, 500); // Wait for DOM to populate
       });
     };
 
-    const checkLoaded = async () => {
-      try {
-        // Wait for all resources to be loaded
-        await checkAllResourcesLoaded();
-        
-        setIsWebsiteLoaded(true);
-        
-        // Wait for animation to complete before hiding loader
-        const checkAnimationComplete = () => {
-          if (isAnimationComplete) {
-            // Additional small delay for smooth transition
-            setTimeout(() => {
-              setIsLoading(false);
-            }, 300);
-          } else {
-            setTimeout(checkAnimationComplete, 100);
-          }
-        };
-        
-        // Give animation time to start, then check
-        setTimeout(checkAnimationComplete, 500);
-      } catch (error) {
-        console.error('Error checking resources:', error);
-        // Fallback - hide loader after reasonable time
+    // Wait for all media (audio, video) elements to load
+    const waitForMedia = () => {
+      return new Promise((resolve) => {
         setTimeout(() => {
-          setIsLoading(false);
-        }, 5000);
+          const mediaElements = Array.from(document.querySelectorAll("video, audio"));
+          if (mediaElements.length === 0) {
+            resolve(); // No media to load
+            return;
+          }
+
+          const mediaPromises = mediaElements.map((media) => {
+            return new Promise((mediaResolve) => {
+              if (media.readyState >= 2) { // `HAVE_CURRENT_DATA` or higher
+                mediaResolve(); // Already loaded
+                return;
+              }
+
+              const handleLoadedData = () => {
+                mediaResolve();
+              };
+
+              const handleError = () => {
+                mediaResolve(); // Resolve even on error
+              };
+
+              media.addEventListener('loadeddata', handleLoadedData, { once: true });
+              media.addEventListener('error', handleError, { once: true });
+
+              // Fallback timeout
+              setTimeout(() => {
+                mediaResolve();
+              }, 4000);
+            });
+          });
+
+          Promise.all(mediaPromises).then(resolve);
+        }, 500); // Wait for DOM to populate
+      });
+    };
+
+    // Wait for your app critical data to load (such as API data)
+    const waitForAppData = () => Promise.all(loaders);
+
+    const startLoadingCheck = async () => {
+      try {
+        console.log('🔄 Starting comprehensive resource check...');
+        
+        await Promise.all([
+          waitForBrowserLoad(),
+          waitForFonts(),
+          waitForImages(),
+          waitForMedia(),
+          waitForAppData(), // Wait for your app's critical data
+        ]);
+        
+        console.log('✅ All resources loaded - waiting for animation');
+        setResourcesLoaded(true);
+      } finally {
+        // Don't set isLoading to false here - wait for animation
       }
     };
 
-    // Start checking immediately
-    checkLoaded();
-
-    return () => {
-      window.removeEventListener('load', checkLoaded);
-    };
-  }, [isAnimationComplete]);
-
-  // Listen for animation completion from loader component
-  useEffect(() => {
+    // Listen for animation completion from loader component
     const handleAnimationComplete = () => {
-      setIsAnimationComplete(true);
+      console.log('🎬 Animation complete');
+      setAnimationComplete(true);
     };
 
     window.addEventListener('loaderAnimationComplete', handleAnimationComplete);
-    
+
+    startLoadingCheck();
+
     return () => {
+      cancelled = true;
       window.removeEventListener('loaderAnimationComplete', handleAnimationComplete);
     };
-  }, []);
+  }, [loaders]);
+
+  // Only hide loader when both resources AND animation are complete
+  useEffect(() => {
+    if (resourcesLoaded && animationComplete) {
+      console.log('🎯 Both resources and animation complete - hiding loader');
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300); // Small delay for smooth transition
+    }
+  }, [resourcesLoaded, animationComplete]);
 
   return isLoading;
 };
+
+// Helper function to load images
+export const loadImage = (src) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = src;
+    img.onload = resolve;
+    img.onerror = reject;
+  });

@@ -47,7 +47,7 @@ export const testimonials = [
     rating: 5,
     text: "Alhamdulillah! My son completed his first Juz in just 3 months. The structured method and patience of the teachers are exceptional.",
     course: "Nazira",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "/images/testimonial-ahmed-khan.webp"
   },
   {
     id: 2,
@@ -56,16 +56,16 @@ export const testimonials = [
     rating: 5,
     text: "The teachers focus on both Tajweed and character building. My son loves Quran classes and waits eagerly for every session.",
     course: "Hifz",
-    image: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "/images/testimonial-omar-rashid.webp"
   },
   {
     id: 3,
-    name: "Muhammad Naveed",
+    name: "Naveed Ikram",
     location: "London, UK",
     rating: 5,
     text: "Grateful to my teacher for his patience, dedication, and guidance. His effort improved my pronunciation and boosted my Qur'an recitation confidence.",
     course: "Tajweed",
-    image: "images/NaveedBhai.png"
+    image: "/images/NaveedBhai.png"
   },
   {
     id: 4,
@@ -74,7 +74,7 @@ export const testimonials = [
     rating: 5,
     text: "Starting from Qaida, my son now reads Quran fluently. The teaching system is clear, disciplined, and child-friendly.",
     course: "Qaida",
-    image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "/images/testimonial-abdullah-malik.webp"
   },
   {
     id: 5,
@@ -83,7 +83,7 @@ export const testimonials = [
     rating: 5,
     text: "Learning Arabic alongside Quran helped me understand Allah's words directly. The explanations are simple yet deep.",
     course: "Arabic",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "/images/testimonial-yusuf-farooq.webp"
   },
   {
     id: 6,
@@ -92,7 +92,7 @@ export const testimonials = [
     rating: 5,
     text: "Tarjuma completely changed my relationship with the Quran. Understanding the meaning increased my khushu in salah.",
     course: "Tarjuma",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face&auto=format"
+    image: "/images/testimonial-ali-rahman.webp"
   }
 ];
 
@@ -134,7 +134,7 @@ Online Quran learning combines traditional Islamic education with modern conveni
     date: "2025-01-15",
     category: "Education",
     readTime: "5 min read",
-    image: "https://images.unsplash.com/photo-1588072432836-e10032774350?w=800&q=80"
+    image: "/images/blog-quran-online-children.webp"
   },
   {
     id: 2,
@@ -197,7 +197,7 @@ Our qualified teachers specialize in Tajweed education for all ages. Whether you
     date: "2025-01-10",
     category: "Tajweed",
     readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800&q=80"
+    image: "/images/blog-what-is-tajweed.webp"
   },
   {
     id: 3,
@@ -319,7 +319,7 @@ Our structured Hifz-ul-Quran program combines expert teaching with parental guid
     date: "2025-01-05",
     category: "Hifz & Parenting",
     readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1595123550441-d377e017de6a?w=800&q=80"
+    image: "/images/blog-benefits-hifz.webp"
   }
 ];
 
@@ -456,7 +456,7 @@ export const aboutData = {
     name: "Hafiz Arham",
     role: "Founder & CEO",
     organization: "Quran Academy",
-    image: "/images/founder-photo.jpg",
+    image: "/images/founder-photo.webp",
     sections: [
       {
         title: "Who I Am",

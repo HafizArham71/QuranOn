@@ -26,7 +26,7 @@ import NotFound from "./pages/NotFound";
 import PageTitleManager from "./components/PageTitleManager";
 
 function App() {
-  const isLoading = useElegantLoader();
+  const isLoading = useElegantLoader([]);
 
   if (isLoading) {
     return <ElegantLoader />;
